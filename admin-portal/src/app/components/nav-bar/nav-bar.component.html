@@ -1,0 +1,23 @@
+<nav class="navbar navbar-dark" style="background-color: blueviolet;">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a style="cursor: pointer;color: white;" class="navbar-brand">ADMIN PORTAL</a>
+        </div>
+
+        <div class="collapse navbar-collapse">
+            <div [hidden]="!loggedIn">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#" 
+                           style="color: white;"
+                           href="#" 
+                           style="color: white;"
+                           routerLink="/bookList">View Book List</a></li>
+                    <li><a href="#" 
+                           style="color: white;"
+                           routerLink="/addNewBook">Add a Book</a></li>
+                    <li><a href="#" style="color: white;" (click)="logout()">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>

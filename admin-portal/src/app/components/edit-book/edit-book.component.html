@@ -1,0 +1,116 @@
+<div class="row">
+  <div class="col-xs-12" [hidden] = "bookUpdated">
+          <h3 style="margin-top: 30px;">New Book Information 
+          <span style="font-size:small">* is a required field</span></h3>
+          
+          <!-- ngNativeValidate to enable basic html validatio like requried attribute -->
+          <form (ngSubmit)= "onSubmit(f)" #f="ngForm" ngNativeValidate> 
+              <div class="row">
+                <div class="col-xs-12">
+                    <input class="input" placeholder="Title*" type="text" name="title" [(ngModel)]="book.title" required>
+                </div>
+              </div>
+              <div class="row">
+                  <div class="col-xs-6">
+                      <input class="input" placeholder="Author*" type="text" name="author" [(ngModel)]="book.author" required>
+                  </div>
+                  <div class="col-xs-6">
+                      <input class="input" placeholder="Publisher*" type="text" name="publisher" [(ngModel)]="book.publisher" required>
+                  </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <input class="input" placeholder="Publication Date*" type="date" name="publicationDate" [(ngModel)]="book.publicationDate" required>
+                    </div>
+                </div>
+                <div class="row">
+                <div class="col-xs-6">
+                <select class="custom-select" name="category" [(ngModel)]="book.category">
+                    <option selected>Category</option>
+                    <option value="Management">Management</option>
+                    <option value="Fiction">Fiction</option>
+                    <option value="Engineering">Engineering</option>
+                    <option value="Programming">Programming</option>
+                    <option value="Arts &amp; Literature">Arts &amp; Literature</option>
+                  </select>
+                </div>
+                <div class="col-xs-6">
+                    <select class="custom-select" name="format" [(ngModel)]="book.format">
+                        <option selected >Format</option>
+                        <option value="paperback">PaperBack</option>
+                        <option value="hardcover">Hardcover</option>
+                      </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <input class="input" placeholder="Number Of Pages" type="number" name="numberOfPages" [(ngModel)]="book.numberOfPages">
+                    </div>
+                    <div class="col-xs-6">
+                        <input class="input" placeholder="ISBN*" type="text" name="isbn" [(ngModel)]="book.isbn" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <input class="input" placeholder="List Price" type="number" name="listPrice" [(ngModel)]="book.listPrice">
+                    </div>
+                    <div class="col-xs-6">
+                        <input class="input" placeholder="Our Price" type="number" name="ourPrice" [(ngModel)]="book.ourPrice">
+                    </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-xs-6" >
+                          <input class="input" placeholder="Shipping Weight in ounce" type="number" name="shippingWeight" [(ngModel)]="book.shippingWeight">
+                      </div>
+                      <div class="col-xs-6">
+                          <select class="custom-select" name="language" [(ngModel)]="book.language">
+                            <option selected>Language</option>
+                            <option value = "English">English</option>
+                            <option value = "Spanish">Spanish</option>
+                          </select>
+                      </div>
+                    </div>
+                  <div class="row">
+                      <div class="col-xs-6" >
+                          <input class="input" placeholder="Numbers in Stocks" type="number" name="inStockNumber" [(ngModel)]="book.inStockNumber">
+                      </div>
+                      <div class="col-xs-1" >
+                      <div class="onoffswitch">
+                        <input type="checkbox" class="onoffswitch-checkbox" id="myonoffswitch" name="active">
+                        <label class="onoffswitch-label" for="myonoffswitch">
+                            <span class="onoffswitch-inner"></span>
+                            <span class="onoffswitch-switch"></span>
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-xs-2" style="margin-top:18px;font-size: 25px">Active</div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <textarea style="width: 100%;" name="input" id="" rows="2" placeholder="Description*" name="description" [(ngModel)]="book.description"></textarea>                      </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-12" style="margin-top: 10px">
+                        <span style="float:left">Image &nbsp;</span>
+                        <input  type="file" id="bookImage"  name="bookImage"
+                        (change)= "uploadImageService.fileChangeEvent($event)">
+                  </div>
+                  </div>
+                  <br><br>
+
+                  <div>
+                      <div class="col-xs-12">
+                        <div class="btn-toolbar">
+                        <button class="btn btn-success btn-space" type="submit">Update Book</button>
+                        <button class="btn btn-danger btn-space" type="button" (click)="onCancel()">Cancel</button>
+                      </div>
+                      </div>
+                  </div>
+          </form>
+        </div>
+  </div>
+  <div class="row" [hidden]="!bookUpdated">
+    <h3>Book Updated Successfully</h3>
+  </div>
+
+  

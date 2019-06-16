@@ -1,0 +1,77 @@
+<!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script> -->
+
+<div class="container">
+  <div class="table-responsive" style="margin-top: 30px;">
+    <table id = "bookListTable" class = "table table-bordered table-hover">
+      <thead>
+        <tr class="bg-primary">
+          <th>
+            <input type="checkbox"
+                   (change) = "updateSelected($event.target.checked)" />
+          </th>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Category</th>
+          <th>List Price</th>
+          <th>Our Price</th>
+          <th>Actvie</th>
+          <th>Operation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor = "let book of bookList">
+          <td>
+            <input hidden="hidden" name = "id" />
+            <input type="checkbox" [checked]="allChecked"
+                 (change)="updateRemoveBookList($event.target.checked,book)" />
+          </td>
+          <td>
+            <a (click) = "onSelect(book)" style="cursor:pointer">{{book.title}}</a>
+          </td>
+          <td>{{book.author}}</td>
+          <td>{{book.category}}</td>
+          <td>{{book.listPrice}}</td>
+          <td>{{book.ourPrice}}</td>
+          <td>{{book.active}}</td>
+          <td>
+            <input hidden="hidden" name="id" />
+            <button class="btn btn-danger btn-space fa fa-remove" 
+                    type="submit" 
+                    (click)="openDialog(book,false)" value="delete">
+                  delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <button class="btn btn-danger btn-space"
+          id="deleteSelected"
+          (click)="removeSelectedBooks()">Delete Selected</button>
+</div>
+
+  <!-- modal -->
+  <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+    <!-- modal-dialog -->
+    <div class="modal-dialog" role="document">
+      <!-- modal-content -->
+      <div class="modal-content">
+        <!-- modal-header -->
+        <div class="modal-header">
+            <button type="button" class="close" aria-label="Close" (click)="closeDialog()">&times;</button>
+            <h2 class="modal-title">Confirm Deleting</h2>
+          </div>
+        <!-- modal-body -->
+        <div class="modal-body">
+          <h4>Are you sure want to delete?</h4>
+        </div>
+        <!-- modal-footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" (click)="confirmDelete()" >Yes</button>
+          <button type="button" class="btn btn-default" (click)="closeDialog()">Close</button>
+        </div>
+      </div>
+      
+    </div>
+
+  </div>
