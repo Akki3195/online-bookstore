@@ -42,6 +42,9 @@ export class BookListComponent implements OnInit {
       },
       error => {
         console.log(error);
+        if(JSON.parse(error._body).error == 'Unauthorized'){
+          this.router.navigate(['/login']);
+        }
       }
     );
   }
