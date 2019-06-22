@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
           location.reload();
         },
         error =>{
-          
+          console.log(error);
         }
       );
   }
