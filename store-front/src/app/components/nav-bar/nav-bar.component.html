@@ -1,0 +1,38 @@
+<div class="page-top" style="width:100%; height:20px;background-color: #f46b42"></div>
+
+<nav class="navbar navbar-default navbar-inverse">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand pointer" routerLink="/home">Akki's Bookstore</a>
+    </div>
+
+    <div id="navbar">
+      <ul class = "nav navbar-nav navbar-left">
+        <li><a routerLink="/bookList">BOOK</a></li>
+        <form (ngSubmit)="onSearchByTitle()" class="navbar-form">
+          <div class="form-group">
+            <input type="text" name="serachByTitle" [(ngModel)]="keyboard" class="form-control"
+                   placeholder="Book Title">
+          </div>
+          <button type="submit" class="btn btn-default">Search</button>
+        </form>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li *ngIf="!loggedIn">
+          <a routerLink="/myAccount">MY ACCOUNT</a>
+        </li>
+        <li *ngIf="loggedIn">
+          <a routerLink="/shoppingCart">SHOPPING CART</a>
+        </li>
+        <li *ngIf="loggedIn">
+          <a routerLink="/myProfile">MY PROFILE</a>
+        </li>
+        <li *ngIf="loggedIn">
+          <a (click)="logout()">LOGOUT</a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+
+</nav>

@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.bookstore.service.UserSecurityService;
 
@@ -30,14 +31,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			"/css/**",
 			"/js/**",
 			"/image/**",
-			 "/book/**", 
+			/* "/book/**", */ 
 			"/user/**",
 			"/checkSession"
 	};
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
-		
+		/*
+		 * http .formLogin() .successHandler(ajaxSuccessHandler)
+		 * .failureHandler(ajaxFailureHandler) .loginProcessingUrl("/authentication")
+		 * .passwordParameter("password") .usernameParameter("username") .and()
+		 * .logout() .deleteCookies("JSESSIONID") .invalidateHttpSession(true)
+		 * .logoutUrl("/logout") .logoutSuccessUrl("/")
+		 */
 		
 		  http.csrf().disable().cors().disable().httpBasic().and().authorizeRequests()
 		  .antMatchers(PUBLIC_MATCHERS).permitAll().anyRequest().authenticated();

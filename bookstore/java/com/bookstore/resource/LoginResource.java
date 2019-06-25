@@ -41,11 +41,11 @@ public class LoginResource {
 			
 		}
 	}
-	@RequestMapping(value="/user/logout", method =RequestMethod.POST)
-	public ResponseEntity<String> logout() {
-		SecurityContextHolder.clearContext();
-		return new ResponseEntity<String>("Logout Successful!", HttpStatus.OK);
-	}
+	
+	  @RequestMapping(value="/user/logout", method =RequestMethod.POST) public
+	  ResponseEntity<String> logout() { SecurityContextHolder.clearContext();
+	  return new ResponseEntity<String>("Logout Successful!", HttpStatus.OK); }
+	 
 	
 	
 }
