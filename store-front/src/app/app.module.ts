@@ -8,12 +8,16 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { routing } from './app.routing';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { MyAccountComponent } from './components/my-account/my-account.component';
+import { LoginService } from './services/login.service';
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    NavBarComponent
+    NavBarComponent,
+    MyAccountComponent
   ],
   imports: [
     BrowserModule,
@@ -23,6 +27,8 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
     routing
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent,
+              LoginService,
+              UserService]
 })
 export class AppModule { }
