@@ -26,9 +26,8 @@ import { UserService } from './services/user.service';
     HttpClientModule,
     routing
   ],
-  providers: [],
-  bootstrap: [AppComponent,
-              LoginService,
-              UserService]
+  providers: [LoginService,
+              UserService],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

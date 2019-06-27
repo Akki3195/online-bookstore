@@ -3,9 +3,7 @@ import { AppConst } from '../constants/app-const';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Router } from '@angular/router';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class LoginService {
 
   private serverPath : string = AppConst.serverPath;

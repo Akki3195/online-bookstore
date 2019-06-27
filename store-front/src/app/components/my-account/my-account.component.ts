@@ -17,9 +17,10 @@ export class MyAccountComponent implements OnInit {
 
   private emailSent: boolean = false;
   private userNameExists: boolean;
-  private emailExists: string;
+  private emailExists: boolean;
   private username: string;
   private email: string;
+  private recoverEmail: string;
 
   private emailNotExists: boolean= false;
   private forgetPasswordEmailSent: boolean;
@@ -28,11 +29,50 @@ export class MyAccountComponent implements OnInit {
     private userService: UserService,
     private router: Router) { }
 
-  ngOnInit() {
+  onNewAccount(){
+    this.userNameExists = false;
+    this.emailExists = false;
+    this.emailSent = false;
+
+    this.userService.newUser(this.username,this.email).subscribe(
+      res => {
+        console.log(res);
+        this.emailSent = true;
+      },
+      error => {
+        console.log(error.text());
+        let errorMessage = error.text();
+        if(errorMessage === "usernameExists")
+         this.userNameExists = true;
+        if(errorMessage === "emailExists")
+         this.emailExists = true;
+      }
+    );
+  } 
+
+  onForgetPassword(){
+    this.forgetPasswordEmailSent = false;
+    this.emailNotExists = false;
+    
+    this.userService.retrievePassword(this.recoverEmail).subscribe(
+      res => {
+        console.log(res);
+        this.emailSent = true;
+      },
+      error => {
+        console.log(error.text());
+        let errorMessage = error.text();
+        if(errorMessage === "emailExists")
+         this.emailExists = true;
+      }
+    );
+  }
+
+  onLogin() {
     this.loginService.sendCredential(this.credential.username,this.credential.password).subscribe(
       res => {
         console.log(res);
-        localStorage.setItem("xAuthToken",res.json().token);
+        localStorage.setItem("xAuthToken","pending");
         this.loggedIn= true;
         location.reload();
         this.router.navigate(['/home'])
@@ -44,6 +84,17 @@ export class MyAccountComponent implements OnInit {
       }
     );
     
+  }
+
+  ngOnInit(){
+    this.loginService.checkSession().subscribe(
+      res => {
+        this.loggedIn = true;
+      },
+      error => {
+        this.loggedIn = false;
+      }
+    );
   }
 
 }
