@@ -11,22 +11,22 @@ import org.springframework.stereotype.Service;
 
 import com.bookstore.domain.User;
 import com.bookstore.domain.security.UserRole;
-import com.bookstore.repository.RoleRepository;
 import com.bookstore.repository.UserRepository;
-import com.bookstore.repository.UserRoleRepository;
 import com.bookstore.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService{
 	private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
-	@Autowired
-	private UserRoleRepository userRoleRepository;
+	/*
+	 * @Autowired private UserRoleRepository userRoleRepository;
+	 */
 	
 	@Autowired
 	private UserRepository userRepository;
 	
-	@Autowired
-	private RoleRepository roleRepository;
+	/*
+	 * @Autowired private RoleRepository roleRepository;
+	 */
 	
 	@Transactional
 	public User createUser(User user, Set<UserRole> userRoles) {

@@ -9,7 +9,7 @@
             "request": "launch",
             "name": "Launch Chrome",
             "url": "http://localhost:4200",
-            "webRoot": "${workspaceFolder}/admin-portal"
+            "webRoot": "${workspaceFolder}/store-front"
         },
     ]
 }

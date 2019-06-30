@@ -24,9 +24,9 @@ export class LoginService {
   checkSession(){
     let url = this.serverPath+'/checkSession';
     let headers = new HttpHeaders({
-      'x-auth-token' : localStorage.getItem('xAuthItem')
+      'x-auth-token' : localStorage.getItem('xAuthToken')
     });
-    return this.http.get(url,{headers: headers});
+    return this.http.get(url,{headers: headers,responseType:'text'});
   }
 
   logout(){
