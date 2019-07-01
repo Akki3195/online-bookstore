@@ -25,7 +25,7 @@ public class UserRole implements Serializable{
 	@JoinColumn(name = "user_id")
 	private User user;
 	
-	@ManyToOne(fetch = FetchType.EAGER ,cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER ,cascade = CascadeType.MERGE)
 	private Role role;
 	
 	

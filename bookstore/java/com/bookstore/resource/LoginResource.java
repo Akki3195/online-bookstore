@@ -25,24 +25,20 @@ public class LoginResource {
 		return Collections.singletonMap("token", session.getId());		
 	}
 	
-	
 	@RequestMapping("/checkSession")
 	public ResponseEntity<String> checkSession(HttpServletRequest request, HttpServletResponse response) {
-		if(request.getHeader("x-auth-token") != null &&
-				!request.getHeader("x-auth-token").isEmpty() )
-		{
-			return new ResponseEntity<String>("Session Active",HttpStatus.OK);
-		}
-		else {
-			return new ResponseEntity<String>("Session Not Active",HttpStatus.FORBIDDEN);
-			
+		if (request.getHeader("x-auth-token") != null && !request.getHeader("x-auth-token").isEmpty()) {
+			return new ResponseEntity<String>("Session Active", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>("Session Not Active", HttpStatus.FORBIDDEN);
+
 		}
 	}
-	
-	  @RequestMapping(value="/user/logout", method =RequestMethod.POST) public
-	  ResponseEntity<String> logout() { SecurityContextHolder.clearContext();
-	  return new ResponseEntity<String>("Logout Successful!", HttpStatus.OK); }
-	 
-	
+
+	@RequestMapping(value = "/user/logout", method = RequestMethod.POST)
+	public ResponseEntity<String> logout() {
+		SecurityContextHolder.clearContext();
+		return new ResponseEntity<String>("Logout Successful!", HttpStatus.OK);
+	}
 	
 }
