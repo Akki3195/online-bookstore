@@ -16,10 +16,10 @@ export class UserService {
     };
     let tokenHeader = new HttpHeaders({
       'Content-Type' : 'application/json',
-      'x-auth-token' : localStorage.getItem('xAuthToken')
+      //  
     });
 
-    return this.http.post(url,JSON.stringify(userInfo), {headers: tokenHeader});
+    return this.http.post(url,JSON.stringify(userInfo), {headers: tokenHeader,responseType: 'text'});
   }
 
   retrievePassword(email:string){

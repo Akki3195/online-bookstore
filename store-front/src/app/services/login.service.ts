@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AppConst } from '../constants/app-const';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Router } from '@angular/router';
+import { text } from '@angular/core/src/render3';
 
 @Injectable()
 export class LoginService {
@@ -32,8 +33,8 @@ export class LoginService {
   logout(){
     let url = this.serverPath+'/user/logout';
     let headers = new HttpHeaders({
-      'x-auth-token' : localStorage.getItem('xAuthItem')
+      'x-auth-token' : localStorage.getItem('xAuthToken')
     });
-    return this.http.post(url, '',{headers: headers});
+    return this.http.post(url, '',{headers: headers,responseType: 'text'});
   }
 }

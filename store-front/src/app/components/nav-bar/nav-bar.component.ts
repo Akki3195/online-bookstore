@@ -11,14 +11,25 @@ export class NavBarComponent implements OnInit {
 
   constructor(private loginService: LoginService) { }
 
+  logout(){
+    this.loginService.logout().subscribe(
+      res => {
+        console.log(res);
+        localStorage.removeItem('xAuthToken');
+        location.reload();
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
   ngOnInit() {
     this.loginService.checkSession().subscribe(
       res => {
-        console.log("from Success"+res);
         this.loggedIn = true;
       },
       error => {
-        console.log("from Error"+error);
         this.loggedIn = false;
       }
     );

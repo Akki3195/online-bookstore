@@ -40,11 +40,10 @@ export class MyAccountComponent implements OnInit {
         this.emailSent = true;
       },
       error => {
-        console.log(error.text());
-        let errorMessage = error.text();
-        if(errorMessage === "usernameExists")
+        let errorMessage = JSON.parse(JSON.stringify(error)).error;
+        if(errorMessage === "Username Exists")
          this.userNameExists = true;
-        if(errorMessage === "emailExists")
+        if(errorMessage === "Email Exists")
          this.emailExists = true;
       }
     );
