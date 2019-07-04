@@ -1,7 +1,9 @@
 package com.bookstore.resource;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,11 +13,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bookstore.config.SecurityConfig;
 import com.bookstore.config.SecurityUtility;
 import com.bookstore.domain.User;
 import com.bookstore.domain.security.Role;
@@ -69,4 +73,87 @@ public class UserResource {
 		
 		return new ResponseEntity<String>("User Added Succefully",HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/forgetPassword",method=RequestMethod.POST)
+	public ResponseEntity<String> forgetPassword(HttpServletRequest request,
+							@RequestBody HashMap<String, String> mapper) throws Exception{
+
+		User user = userService.findByEmail(mapper.get("email"));
+		
+		if(user == null) {
+			return new ResponseEntity<String>("Email not found",HttpStatus.BAD_REQUEST);
+		}
+		
+		String password = SecurityUtility.randomPassword();
+		
+		String encryptedPassword =SecurityUtility.passwordEncoder().encode(password);
+		user.setPassword(encryptedPassword);
+		userService.save(user);
+		
+		SimpleMailMessage newEmail = mailConstructor.constructNewUserEmail(user,password);
+		mailSender.send(newEmail);
+		
+		return new ResponseEntity<String>("Email sent succefully",HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/updateUserInfo",method=RequestMethod.POST)
+	public ResponseEntity<String> profileInfo(@RequestBody HashMap<String,Object> mapper) throws Exception{
+		
+		int id = (Integer) mapper.get("id");
+		String email = (String) mapper.get("email");
+		String username = (String) mapper.get("username");
+		String firstName = (String) mapper.get("firstName");
+		String lastName = (String) mapper.get("lastName");
+		String newPassword = (String) mapper.get("newPassword");
+		String currentPassword = (String) mapper.get("currentPassword");
+		User currentUser = null;
+		
+		Optional<User> currUser = userService.findById(Long.valueOf(id));
+		if(currUser == null) {
+			throw new Exception("user not found");
+		}
+		else {
+			currentUser  = currUser.get();
+		}
+		if(userService.findByEmail(email) != null) {
+			if(userService.findByEmail(email).getId() != currentUser.getId()) {
+				return new ResponseEntity<String>("Email not found",HttpStatus.BAD_REQUEST);
+			}
+		}
+		if(userService.findByUsername(username) != null) {
+			if(userService.findByUsername(username).getId() != currentUser.getId()) {
+				return new ResponseEntity<String>("Username not found",HttpStatus.BAD_REQUEST);
+			}
+		}
+		SecurityConfig securityConfig = new SecurityConfig();
+		
+		if(newPassword != null && newPassword.isEmpty() && !newPassword.equals("")) {
+			BCryptPasswordEncoder passwordEncoder = SecurityUtility.passwordEncoder();
+			String dbPassword = currentUser.getPassword();
+			if(currentPassword.equals(dbPassword)){
+				currentUser.setPassword(passwordEncoder.encode(newPassword));
+			}
+			else {
+				return new ResponseEntity<String>("Incorrect current Password",HttpStatus.BAD_REQUEST);
+			}
+		}
+		
+		currentUser.setFirstName(firstName);
+		currentUser.setLastName(lastName);
+		currentUser.setUsername(username);
+		currentUser.setEmail(email);
+		
+		userService.save(currentUser);
+		
+		return new ResponseEntity<String>("Update Success",HttpStatus.OK);
+		
+	}
+	
+	@RequestMapping("/getCurrentUser")
+	public User getCurrentUser(Principal principal) {
+		User user = userService.findByUsername(principal.getName());
+		
+		return user;
+	}
+	
 }
