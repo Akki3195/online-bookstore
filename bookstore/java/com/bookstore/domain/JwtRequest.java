@@ -11,7 +11,7 @@ public class JwtRequest implements Serializable {
 
 	// default constructor for JSON Parsing
 	public JwtRequest() {
-
+		System.out.println("In a default constructor of JwtRequest");
 	}
 
 	public JwtRequest(String username, String password) {

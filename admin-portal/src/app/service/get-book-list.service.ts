@@ -13,7 +13,7 @@ export class GetBookListService {
     let url = "http://localhost:8181/book/bookList";
     let headers = new Headers({
       'Content-Type': 'application/json',
-      'x-auth-token' : localStorage.getItem('xAuthToken')
+      'Authorization' : localStorage.getItem('token')
     });
     return this.http.get(url,{headers: headers});
   }

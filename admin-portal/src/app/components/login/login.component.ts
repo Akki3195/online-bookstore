@@ -14,13 +14,18 @@ export class LoginComponent implements OnInit {
   constructor(private loginService: LoginService) { }
 
   onSubmit(form: NgForm){
-    this.loginService.sendCredential(form.value.username , form.value.password)
+    let username = form.value.username;
+    let password = form.value.password;
+    this.loginService.sendCredential(username , password)
       .subscribe(
         res => {
-          console.log(res);
-          localStorage.setItem("xAuthToken",res.json().token);
-          this.loggedIn = true;
+          localStorage.setItem('username',username);
+          let jwtToken = JSON.parse(JSON.parse(JSON.stringify(res))._body).token;
+          let tokenStr= 'Bearer '+jwtToken;
+          localStorage.setItem('token', tokenStr);
+          this.loggedIn= true;
           location.reload();
+          // localStorage.setItem("xAuthToken",res.json().token);
         },
         error =>{
           console.log(error);
@@ -29,17 +34,12 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loginService.checkSession()
-      .subscribe(
-      res => {
-        this.loggedIn=true;
-      },
-      error => {
-        this.loggedIn=false;
-        console.log(error);
-      }
-    );
-
+    if(this.loginService.checkSession()){
+      this.loggedIn=true;
+    }
+    else{
+      this.loggedIn=false;
+    }
   }
 
 }

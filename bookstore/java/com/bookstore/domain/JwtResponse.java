@@ -2,9 +2,9 @@ package com.bookstore.domain;
 
 import java.io.Serializable;
 
-public class JwtResponse implements Serializable{
+public class JwtResponse /* implements Serializable */{
 
-	private static final long serialVersionUID = 1L;
+	/* private static final long serialVersionUID = 1L; */
 	private final String jwtToken;
 	
 	public JwtResponse(String jwtToken) {

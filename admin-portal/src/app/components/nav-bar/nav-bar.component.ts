@@ -12,29 +12,32 @@ export class NavBarComponent implements OnInit {
   constructor(private loginService: LoginService,private router: Router) { }
 
   ngOnInit() {
-    this.loginService.checkSession()
-      .subscribe(
-      res => {
-        this.loggedIn=true;
-      },
-      error => {
-        this.loggedIn=false;
-        console.log(error);
-      }
-    );
+    //this.logout();
+    if(this.loginService.checkSession()){
+      this.loggedIn=true;
+    }
+    else{
+      this.loggedIn=false;
+    }
   }
 
   logout(){
-    this.loginService.logout()
-      .subscribe(
+    this.loginService.logout().subscribe(
       res => {
-        localStorage.clear();
+        console.log("in res method");
+        console.log(res);
+        localStorage.removeItem('username');
+        localStorage.removeItem('token');
         location.reload();
-      },
+      },  
       error => {
+        console.log("in error method");
         console.log(error);
       }
+        
     );
-    this.router.navigate(['/']);
+    console.log("code excuted after subscription");
+    // this.router.navigate(['/']);
   }
+
 }

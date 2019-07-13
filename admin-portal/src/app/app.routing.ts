@@ -6,6 +6,7 @@ import { GetBookListService } from './service/get-book-list.service';
 import { BookListComponent } from './components/book-list/book-list.component';
 import { ViewBookComponent } from './components/view-book/view-book.component';
 import { EditBookComponent } from './components/edit-book/edit-book.component';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 
 
 const appRoutes: Routes = [
@@ -34,6 +35,7 @@ const appRoutes: Routes = [
         path: 'editBook/:id',
         component: EditBookComponent
     }
+
 
 ];
 

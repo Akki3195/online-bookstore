@@ -58,17 +58,14 @@ export class MyProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loginService.checkSession().subscribe(
-      res => {
-        this.loggedIn = true;
-      },
-      error => {
-        this.loggedIn = false;
-        console.log("inactive session");
-        this.router.navigate(['/myAccount']);
-      }
-    );
-
+    if(this.loginService.checkSession()){
+      this.loggedIn = true;
+    }else{
+    this.loggedIn = false;
+    console.log("inactive session");
+    this.router.navigate(['/myAccount']);
+    }
+  
     this.getCurrentUser();
   }
 

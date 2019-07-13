@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { AppConst } from '../constants/app-const';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Router } from '@angular/router';
-import { text } from '@angular/core/src/render3';
 
 @Injectable()
 export class LoginService {
@@ -11,29 +10,32 @@ export class LoginService {
   constructor(private http: HttpClient,private router: Router) { }
 
   sendCredential(username: string,password: string){
-    let url = this.serverPath+'/token';
-    let encodedCredential = btoa(username+":"+password);
-    let basicHeader = "Basic "+encodedCredential;
+    let url = this.serverPath+'/authenticate';
+    // let encodedCredential = btoa(username+":"+password);
+    // let basicHeader = "Basic "+encodedCredential;
     let headers = new HttpHeaders({
-      'Content-Type' : 'application/x-www-form-urlencoded',
-      'Authorization' : basicHeader
+      // 'Content-Type' : 'application/x-www-form-urlencoded',
+      'Content-Type' :  'application/json'
+      // 'Authorization' : basicHeader
     });
 
-    return this.http.get(url,{headers: headers});
+    return this.http.post(url,{username,password},{headers: headers});
   }
 
   checkSession(){
-    let url = this.serverPath+'/checkSession';
-    let headers = new HttpHeaders({
-      'x-auth-token' : localStorage.getItem('xAuthToken')
-    });
-    return this.http.get(url,{headers: headers,responseType:'text'});
+    let user = localStorage.getItem('username');
+    if(!(user === null)){
+      return true;
+    }
+    else 
+    return false;
   }
 
   logout(){
     let url = this.serverPath+'/user/logout';
     let headers = new HttpHeaders({
-      'x-auth-token' : localStorage.getItem('xAuthToken')
+      'Authorization' : localStorage.getItem('token')
+      // 'x-auth-token' : localStorage.getItem('xAuthToken')
     });
     return this.http.post(url, '',{headers: headers,responseType: 'text'});
   }

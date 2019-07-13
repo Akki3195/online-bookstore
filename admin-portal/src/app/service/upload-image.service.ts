@@ -54,7 +54,7 @@ export class UploadImageService {
         }
       }
       xhr.open("POST",url,true);
-      xhr.setRequestHeader("x-auth-token",localStorage.getItem("xAuthToken"));
+      xhr.setRequestHeader("Authorization",localStorage.getItem('token'));
       xhr.send(formData);
     })
   }

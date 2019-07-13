@@ -35,8 +35,8 @@ public class JwtAuthenticationResource {
 		authenticate(authenticationRequest.getUsername(),authenticationRequest.getPassword());
 		final User user = userService.findByUsername(authenticationRequest.getUsername());
 		
-		final String token = jwtTokenUtil.generateToken(user);
-		return ResponseEntity.ok(new JwtResponse(token));
+		final String jwtToken = jwtTokenUtil.generateToken(user);
+		return ResponseEntity.ok(new JwtResponse(jwtToken));
 	}
 	
 	private void authenticate(String username, String password) throws Exception{

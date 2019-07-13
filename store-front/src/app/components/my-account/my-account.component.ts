@@ -69,11 +69,16 @@ export class MyAccountComponent implements OnInit {
   onLogin() {
     this.loginService.sendCredential(this.credential.username,this.credential.password).subscribe(
       res => {
-        console.log("From onLogin method "+res);
-        localStorage.setItem("xAuthToken",JSON.parse(JSON.stringify(res)).token);
+        console.log(JSON.parse(JSON.stringify(res)).token);
+        localStorage.setItem('username',this.credential.username);
+        let jwtToken = JSON.parse(JSON.stringify(res)).token;
+        let tokenStr= 'Bearer '+jwtToken;
+        localStorage.setItem('token', tokenStr);
         this.loggedIn= true;
         location.reload();
-        this.router.navigate(['/home'])
+        this.router.navigate(['/home']);
+        // console.log("From onLogin method "+res);
+        // // localStorage.setItem("xAuthToken",JSON.parse(JSON.stringify(res)).token);
       },
       error => {
         this.loggedIn = false;
@@ -85,14 +90,11 @@ export class MyAccountComponent implements OnInit {
   }
 
   ngOnInit(){
-    this.loginService.checkSession().subscribe(
-      res => {
-        this.loggedIn = true;
-      },
-      error => {
-        this.loggedIn = false;
-      }
-    );
+    if(this.loginService.checkSession()){
+      this.loggedIn = true;
+    }else{
+      this.loggedIn = false;
+    }
   }
 
 }

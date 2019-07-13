@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Http, Headers, ResponseContentType } from '@angular/http';
+import { text } from '@angular/core/src/render3';
 
 @Injectable()
 export class LoginService {
@@ -7,30 +8,32 @@ export class LoginService {
   constructor(private http: Http) { }
 
   sendCredential(username: string, password: string){
-    let url = "http://localhost:8181/token";
-    let encodedCredential = btoa(username+":"+password); //Encodes UN and Pass into base64
-    let basicHeader = "Basic "+encodedCredential;
+    let url = "http://localhost:8181/authenticate";
+    // let encodedCredential = btoa(username+":"+password); //Encodes UN and Pass into base64
+    // let basicHeader = "Basic "+encodedCredential;
     let headers = new Headers({
-      'Content-Type' : 'application/x-www-form-urlencoded',
-      'Authorization' : basicHeader
+      'Content-Type' : 'application/json'
     });
-    return this.http.get(url , {headers: headers});
+    return this.http.post(url,{username,password},{headers: headers});
 
   }
 
   checkSession(){
-    let url = "http://localhost:8181/checkSession";
-    let headers = new Headers({
-      'x-auth-token' : localStorage.getItem('xAuthToken')
-    });
-    return this.http.get(url , {headers: headers});
+    let user = localStorage.getItem('username');
+    if(!(user === null)){
+      return true;
+    }
+    else 
+    return false;
   }
 
-  logout(){
+logout(){
     let url = "http://localhost:8181/user/logout";
     let headers = new Headers({
-      'x-auth-token' : localStorage.getItem('xAuthToken')
+      'Content-Type': 'application/json',
+      'Authorization' : localStorage.getItem('token')
     });
-    return this.http.post(url , {headers: headers});
+    return this.http.post(url ,'', {headers: headers});
   }
+
 }

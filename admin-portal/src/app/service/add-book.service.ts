@@ -11,7 +11,7 @@ export class AddBookService {
     let url = "http://localhost:8181/book/add";
     let headers = new Headers({
       'Content-Type': 'application/json',
-      'x-auth-token' : localStorage.getItem('xAuthToken')
+      'Authorization' : localStorage.getItem('token')
     });
     return this.http.post(url,JSON.stringify(book),{headers: headers});
   }

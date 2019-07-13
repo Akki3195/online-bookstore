@@ -15,7 +15,8 @@ export class NavBarComponent implements OnInit {
     this.loginService.logout().subscribe(
       res => {
         console.log(res);
-        localStorage.removeItem('xAuthToken');
+        localStorage.removeItem('token');
+        localStorage.removeItem('username');
         location.reload();
       },
       err => {
@@ -25,14 +26,10 @@ export class NavBarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loginService.checkSession().subscribe(
-      res => {
+    if(this.loginService.checkSession()){
         this.loggedIn = true;
-      },
-      error => {
+    }else{
         this.loggedIn = false;
       }
-    );
-  }
-
+    }
 }
