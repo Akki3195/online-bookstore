@@ -16,6 +16,10 @@ public interface UserService {
 	
 	User save(User user);
 	
+	User merge(User user);
+	
+	
+	
 	Optional<User> findById(Long id);
 	
 
