@@ -18,7 +18,7 @@ export class UserService {
     };
     let tokenHeader = new HttpHeaders({
       'Content-Type' : 'application/json',
-      'Authorization' : localStorage.getItem('token')
+      // 'Authorization' : localStorage.getItem('token')
       // 'x-auth-token' : localStorage.getItem('xAuthToken')
     });
 
@@ -34,7 +34,7 @@ export class UserService {
       "username" : user.userName,
       "currentPassword" : user.password,
       "email" : user.email,
-      "newPassword" : "newPassword"
+      "newPassword" : newPassword
     };
     let tokenHeader = new HttpHeaders({
       'Content-Type' : 'application/json',
@@ -51,7 +51,7 @@ export class UserService {
       // 'x-auth-token' : localStorage.getItem('xAuthToken')
       'Authorization' : localStorage.getItem('token')
     });
-    return this.http.get(url,{headers: tokenHeader,responseType: 'json'});
+    return this.http.get(url,{headers: tokenHeader,responseType:'json'});
   
   }
 
@@ -62,7 +62,7 @@ export class UserService {
     };
     let tokenHeader = new HttpHeaders({
       'Content-Type' : 'application/json',
-      'Authorization' : localStorage.getItem('token')
+      // 'Authorization' : localStorage.getItem('token')
       // 'x-auth-token' : localStorage.getItem('xAuthToken')
     });
 

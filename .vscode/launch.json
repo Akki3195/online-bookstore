@@ -7,9 +7,16 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Launch Chrome",
+            "name": "admin-portal",
             "url": "http://localhost:4200",
             "webRoot": "${workspaceFolder}/admin-portal"
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "store-front",
+            "url": "http://localhost:4200",
+            "webRoot": "${workspaceFolder}/store-front"
         },
     ]
 }

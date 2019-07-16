@@ -47,7 +47,7 @@ export class MyProfileComponent implements OnInit {
     this.userService.getCurrentUser().subscribe(
       res => {
         
-        // this.user = res.get;
+        this.user = JSON.parse(JSON.stringify(res));
         this.dataFetched = true;
 
       },

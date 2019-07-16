@@ -16,7 +16,7 @@
   <hr style="position:absolute;width:65%;height:6px;background-color:#333;
              z-index:-1;margin-top:-170px;" />
 
-  <div *ngIf = "!dateFetched" style="margin-top: 50px">
+  <div *ngIf = "!dataFetched" style="margin-top: 50px">
     <div class="row">
       <div class="col-md-2 col-md-offset-5">
         <i class="fa fa-spinner fa-spin" style="font-size:60px;"></i>
@@ -25,7 +25,7 @@
   </div>
 
   <div class="row" style="margin-top:30px">
-    <div class="col-xs-3">
+    <div class="col-xs-12">
       <div *ngIf="dataFetched">
         <div class="col-xs-9">
           <div class="panel-group">
@@ -34,9 +34,9 @@
                   <!-- tab started -->
                   <ul class="nav nav-pills nav-justified">
                     <li class="active"><a data-toggle="tab" href="#edit">Edit</a></li>
-                    <li ><a data-toggle="tab" href="#edit">Edit</a></li>
-                    <li ><a data-toggle="tab" href="#edit">Edit</a></li>
-                    <li ><a data-toggle="tab" href="#edit">Edit</a></li>
+                    <li ><a data-toggle="tab" href="#edit"></a></li>
+                    <li ><a data-toggle="tab" href="#edit"></a></li>
+                    <li ><a data-toggle="tab" href="#edit"></a></li>
                   </ul>
                   <div class="tab-content" style="margin-top: 20px;">
                     <div class="alert alert-danger" *ngIf = "incorrectPassword">
@@ -57,12 +57,12 @@
                       <div class="row">
                         <div class="col-xs-6">
                           <label for="firstName">First Name</label>
-                          <input type="text" class="form-control" id="firstName" 
+                          <input disabled type="text" class="form-control" id="firstName" 
                           name="firstName" [(ngModel)]="user.firstName"/>
                         </div>
                         <div class="col-xs-6">
                           <label for="lastName">Last Name</label>
-                          <input type="text" class="form-control" id="lastName" 
+                          <input disabled type="text" class="form-control" id="lastName" 
                           name="lastName" [(ngModel)]="user.lastName"/>
                         </div>
                       </div>
@@ -71,7 +71,7 @@
                         <label for="username">Username *</label>
                         &nbsp;<span *ngIf="usernameExists" style="color:red">
                         Username already exists.Choose a different one.</span>
-                        <input type="text" required="required" class="form-control" id="username" 
+                        <input disabled type="text" required="required" class="form-control" id="username" 
                         name="username" [(ngModel)]="user.username"/>
                     </div>
                     <div class="form-group">
@@ -89,7 +89,7 @@
                         <p style="color:#828282;">A valid e-mail address. All e-mail from the system will be sent to
                         this address</p>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                       <label for="email">Email Address *</label>
                         &nbsp;<span *ngIf="emailExists" style="color:red">
                           Email already exists.Choose a different one.</span>
@@ -97,7 +97,7 @@
                         name="email" [(ngModel)]="user.email"/>
                         <p style="color:#828282;">A valid e-mail address. All e-mail from the system will be sent to
                         this address</p>
-                    </div>
+                    </div> -->
                     <div class="form-group">
                       <label for="email">New Password *</label>
                         &nbsp;<span id="checkPasswordMatch" style="color:red;"></span>
