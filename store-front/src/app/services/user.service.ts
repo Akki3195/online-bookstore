@@ -31,7 +31,7 @@ export class UserService {
       "id" : user.id,
       "firstName" : user.userName,
       "lastName" : user.lastName,
-      "username" : user.userName,
+      "userName" : user.userName,
       "currentPassword" : user.password,
       "email" : user.email,
       "newPassword" : newPassword

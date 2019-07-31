@@ -53,7 +53,7 @@ public class UserResource {
 		}
 		
 		User user = new User();
-		user.setUsername(username);
+		user.setUserName(username);
 		user.setEmail(userEmail);
 		
 		String password = SecurityUtility.randomPassword();
@@ -101,7 +101,7 @@ public class UserResource {
 		
 		int id = (Integer) mapper.get("id");
 		String email = (String) mapper.get("email");
-		String username = (String) mapper.get("username");
+		String username = (String) mapper.get("userName");
 		String firstName = (String) mapper.get("firstName");
 		String lastName = (String) mapper.get("lastName");
 		String newPassword = (String) mapper.get("newPassword");
@@ -127,7 +127,7 @@ public class UserResource {
 		}
 		SecurityConfig securityConfig = new SecurityConfig();
 		
-		if(newPassword != null && newPassword.isEmpty() && !newPassword.equals("")) {
+		if(newPassword != null && !newPassword.isEmpty() && !newPassword.equals("")) {
 			BCryptPasswordEncoder passwordEncoder = SecurityUtility.passwordEncoder();
 			String dbPassword = currentUser.getPassword();
 			if(currentPassword.equals(dbPassword)){
@@ -140,20 +140,28 @@ public class UserResource {
 		
 		currentUser.setFirstName(firstName);
 		currentUser.setLastName(lastName);
-		currentUser.setUsername(username);
+		currentUser.setUserName(username);
 		currentUser.setEmail(email);
 		
-		userService.save(currentUser);
+		if(userService.save(currentUser)!= null) {
+			return new ResponseEntity<String>("Update Success",HttpStatus.OK);
+		}
 		
-		return new ResponseEntity<String>("Update Success",HttpStatus.OK);
+		return new ResponseEntity<String>("Update Failed",HttpStatus.INTERNAL_SERVER_ERROR);
 		
 	}
 	
 	@RequestMapping("/getCurrentUser")
 	public User getCurrentUser(Principal principal) {
-		User user = userService.findByUsername(principal.getName());
+		User user = new User();
+		if(principal != null) {
+			user = userService.findByUsername(principal.getName());
+			return user;
+		}
+		else {
+			return user;
+		}
 		
-		return user;
 	}
 	
 }

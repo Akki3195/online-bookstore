@@ -12,6 +12,7 @@ import { MyAccountComponent } from './components/my-account/my-account.component
 import { LoginService } from './services/login.service';
 import { UserService } from './services/user.service';
 import { MyProfileComponent } from './components/my-profile/my-profile.component';
+import { PaymentService } from './services/payment.service';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { MyProfileComponent } from './components/my-profile/my-profile.component
     routing
   ],
   providers: [LoginService,
-              UserService],
+              UserService,
+              PaymentService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

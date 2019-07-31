@@ -3,6 +3,7 @@ package com.bookstore.domain;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -32,7 +33,7 @@ public class User implements UserDetails, Serializable{
 	@Column(name="Id" , nullable= false, updatable= false)
 	private long id; //Long and long are different
 	
-	private String username;
+	private String userName;
 	private String password;
 	private String firstName;
 	private String lastName;
@@ -44,7 +45,10 @@ public class User implements UserDetails, Serializable{
 	@OneToMany(mappedBy= "user", cascade=CascadeType.ALL, fetch = FetchType.EAGER)
 	@JsonIgnore
 	private Set<UserRole> userRoles = new HashSet<>();
-
+	
+	@OneToMany(cascade=CascadeType.ALL,mappedBy = "user")
+	private List<UserPayment> userPaymentList;
+	
 	public long getId() {
 		return id;
 	}
@@ -53,12 +57,12 @@ public class User implements UserDetails, Serializable{
 		this.id = id;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getPassword() {
@@ -129,6 +133,15 @@ public class User implements UserDetails, Serializable{
 		// TODO Auto-generated method stub
 		return true;
 	}
+	
+	public List<UserPayment> getUserPaymentList() {
+		return userPaymentList;
+	}
+
+	public void setUserPaymentList(List<UserPayment> userPaymentList) {
+		this.userPaymentList = userPaymentList;
+	}
+	
 
 	@Override
 	public boolean isAccountNonLocked() {
@@ -145,7 +158,11 @@ public class User implements UserDetails, Serializable{
 	public boolean isEnabled() {
 		return enabled;
 	}
-	
-	
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return userName;
+	}
 
 }

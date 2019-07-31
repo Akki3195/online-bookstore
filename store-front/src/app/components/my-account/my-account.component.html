@@ -22,11 +22,14 @@
       <div class="panel-group">
         <div class="panel panel-default panel-faq" style = "border:none;">
             <div class="panel-body" style="background-color: #e9e3e3;margin-top: 20px;">
-                <ul class="nav nav-pills nav-justified">
+              <!-- Panel header starts -->
+              <ul class="nav nav-pills nav-justified">
                   <li class="active"><a data-toggle="tab" href="#login">Login</a></li>
                   <li><a data-toggle="tab" href="#newAccount">New Account</a></li>
                   <li><a data-toggle="tab" href="#forgetPassword">Forgot Password</a></li>
                 </ul>
+              <!-- Panel header end -->  
+                <!-- Panel tab body starts -->
                 <div class="tab-content">
                 <div style="margin-top:20px;" id ="login" class="tab-pane fade in active">
 									<div *ngIf="loginError" style="color:red;">
@@ -96,6 +99,7 @@
                   </div>
                 
               </div>
+              <!-- Panel tab body ends -->
             </div>
         </div>
       </div>

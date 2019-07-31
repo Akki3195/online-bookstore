@@ -7,8 +7,8 @@ import org.springframework.data.repository.CrudRepository;
 import com.bookstore.domain.User;
 
 public interface UserRepository extends CrudRepository<User, Long>{
-	User findByUsername(String username);
+	User findByUserName(String userName);
 	User findByEmail(String email);
 	List<User> findAll();
-	void Merge(User user);
+	/* void Merge(User user); */
 }
