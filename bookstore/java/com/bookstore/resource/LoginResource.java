@@ -1,5 +1,6 @@
 package com.bookstore.resource;
 
+import java.security.Principal;
 import java.util.Collections;
 import java.util.Map;
 
@@ -9,7 +10,9 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,7 +40,7 @@ public class LoginResource {
 
 	
 	@RequestMapping(value = "/user/logout", method = RequestMethod.POST)
-	public ResponseEntity<String> logout() {
+	public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response,Principal principal) {
 		SecurityContextHolder.clearContext();
 		return new ResponseEntity<String>("Logout Successful!", HttpStatus.OK);
 	}

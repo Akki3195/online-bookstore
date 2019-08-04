@@ -92,9 +92,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean updateUserBilling(UserBilling userBilling , UserPayment userPayment, User user) {
 		userPayment.setUser(user);
-		userPayment.setUserBilling(userBilling);
+		 userPayment.setUserBilling(userBilling); 
 		userPayment.setDefaultPayment(true);
-		userBilling.setUserPayment(userPayment);
+		userBilling.setUserPayment(userPayment); 
 		user.getUserPaymentList().add(userPayment);
 		if(save(user) != null) {
 			return true;
@@ -104,19 +104,20 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public void setUserDefaultPayment(Long userPaymentId, User user) {
-		List<UserPayment> userPaymentList = (List<UserPayment>) userPaymentRepository.findAll();
-		
-		for(UserPayment userPayment: userPaymentList) {
-			if(userPayment.getId() == userPaymentId) {
+
+		List<UserPayment> userPaymentList = userPaymentRepository.findListByUserId(user.getId());
+
+		for (UserPayment userPayment : userPaymentList) {
+			if (userPayment.getId() == userPaymentId) {
 				userPayment.setDefaultPayment(true);
 				userPaymentRepository.save(userPayment);
-			}
-			else {
+			} else {
 				userPayment.setDefaultPayment(false);
 				userPaymentRepository.save(userPayment);
-				
+
 			}
 		}
+		 
 	}
 	/*
 	 * @Override public User merge(User user) { // TODO Auto-generated method stub

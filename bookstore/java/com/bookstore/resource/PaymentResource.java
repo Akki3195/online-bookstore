@@ -36,14 +36,15 @@ public class PaymentResource {
 		
 		UserBilling userBilling = userPayment.getUserBilling();
 		
-		if(userService.updateUserBilling(userBilling, userPayment, user)) {
-			return new ResponseEntity<String>("Payment Added(Updated) Successfully",HttpStatus.OK);
-		}
+			if (userService.updateUserBilling(userBilling, userPayment, user)) {
+				return new ResponseEntity<String>("Payment Added(Updated) Successfully", HttpStatus.OK);
+			}
+			 
 		}
 		return new ResponseEntity<String>("Payment Added(Updated) Failed",HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	@RequestMapping(value="remove", method= RequestMethod.POST)
+	@RequestMapping(value="/remove", method= RequestMethod.POST)
 	public ResponseEntity<String> removePaymentPost(
 			@RequestBody String id,
 			Principal principal){
@@ -53,7 +54,7 @@ public class PaymentResource {
 		return new ResponseEntity<String>("Payment Removed Successfully",HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="setDefault", method= RequestMethod.POST)
+	@RequestMapping(value="/setDefault", method= RequestMethod.POST)
 	public ResponseEntity<String> setDefaultPaymentPost(
 			@RequestBody String id,
 			Principal principal){
@@ -63,7 +64,7 @@ public class PaymentResource {
 		 return new ResponseEntity<String>("Payment Removed Successfully",HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="getUserPaymentList", method= RequestMethod.GET)
+	@RequestMapping(value="/getUserPaymentList", method= RequestMethod.GET)
 	public List<UserPayment> getUserPaymentList(Principal principal){
 		
 		User user = userService.findByUsername(principal.getName());

@@ -8,6 +8,8 @@ import { PaymentService } from 'src/app/services/payment.service';
 import { UserPayment } from 'src/app/models/user-payment';
 import { UserBilling } from 'src/app/models/user-billing';
 import { routerNgProbeToken } from '@angular/router/src/router_module';
+import { UserShipping } from 'src/app/models/user-shipping';
+import { ShippingService } from 'src/app/services/shipping.service';
 
 @Component({
   selector: 'app-my-profile',
@@ -29,24 +31,29 @@ export class MyProfileComponent implements OnInit {
   private currentPassword: string;
 
   private selectProfileTab: number = 0;
-  private selectedBillingTab: number = 0;
 
   private userPayment: UserPayment = new UserPayment();
   private userBilling: UserBilling = new UserBilling();
-  //private userPaymentList: UserPayment = new UserPayment[] = [];
+  private userPaymentList: UserPayment[] =  [];
   private defaultPaymentSet: boolean;
-  private defaultPaymentId: number;
-  private stateList : string[] = [];
+  private defaultUserPaymentId: number;
+  private stateList: string[] = [];
+  private newPaymentAdded: boolean = false;
+  private var: boolean = true;
+
+  private userShipping: UserShipping = new UserShipping();
+  private userShippingList: UserShipping[] = [];
+
+  private defaultUserShippingId: number;
+  private defaultShippingSet: boolean;
+  
 
   constructor(private loginService: LoginService,
               private userService: UserService,
               private router: Router,
-              private paymentService: PaymentService
+              private paymentService: PaymentService,
+              private shippingService: ShippingService
               ) { }
-
-  selectedBillingChange(val: number){
-    this.selectProfileTab = val;
-  }
 
   onUpdateUserInfo(){
     this.userService.updateUserInfo(this.user,this.newPassword).subscribe(
@@ -61,18 +68,24 @@ export class MyProfileComponent implements OnInit {
           this.incorrectPassword = true;
       }
     );
-
   }
 
   getCurrentUser(){
     this.userService.getCurrentUser().subscribe(
       res => {
         this.user = JSON.parse(JSON.stringify(res));
+        this.userPaymentList = this.user.userPaymentList;
+        for (let index in this.userPaymentList) {
+  				if(this.userPaymentList[index].defaultPayment) {
+  					this.defaultUserPaymentId=this.userPaymentList[index].id;
+  					break;
+  				}
+  			}
         console.log(this.user);
         this.dataFetched = true;
       },
       err => {
-        console.log(err);
+        
         if(JSON.parse(JSON.stringify(err)).error.message== "Unauthorized"){
           localStorage.clear();
           location.reload();
@@ -82,21 +95,24 @@ export class MyProfileComponent implements OnInit {
   }
 
   onNewPayment(){
+    this.userPayment.userBilling = this.userBilling;
+    console.log("from new Paymetn"+this.userPayment.userBilling);
     this.paymentService.newPayment(this.userPayment).subscribe(
       res => {
         this.getCurrentUser();
-        this.selectedBillingTab = 0;
+        this.newPaymentAdded = true;
       },
       error => {
-        console.log(error.text());
+        console.log(error);
+        this.newPaymentAdded = false;
       }
     );
   }
 
-  onUpdatePayment(payment: UserPayment){
+  onEditPayment(payment: UserPayment){
+    console.log(payment);
     this.userPayment = payment;
     this.userBilling = payment.userBilling;
-    this.selectedBillingTab = 1;
   }
 
   onRemovePayment(id:number){
@@ -110,12 +126,57 @@ export class MyProfileComponent implements OnInit {
     );
   }
 
+  resetPaymentInfo(){
+    this.userPayment = new UserPayment();
+    this.userBilling = new UserBilling();
+    this.newPaymentAdded = false;
+  }
+
   setDefaultPayment(){
     this.defaultPaymentSet = false;
-    this.paymentService.setDefaultPayment(this.defaultPaymentId).subscribe(
+    this.paymentService.setDefaultPayment(this.defaultUserPaymentId).subscribe(
       res => {
         this.getCurrentUser();
         this.defaultPaymentSet = true;
+      },
+      error => {
+        console.log(error.text());
+      }
+    );
+  }
+
+  onNewShipping(){
+    this.shippingService.newShipping(this.userShipping).subscribe(
+      res => {
+        this.getCurrentUser();
+      },
+      error => {
+        console.log(error.text());
+      }
+    );
+  }
+
+  onUpdateShipping(shipping: UserShipping){
+    this.userShipping = shipping;
+  }
+
+  onRemoveShipping(id: number){
+    this.shippingService.removeShipping(id).subscribe(
+      res => {
+        this.getCurrentUser();
+      },
+      error => {
+        console.log(error.text());
+      }
+    );
+  }
+
+  setDefaultShipping(){
+    this.defaultShippingSet = false;
+    this.shippingService.setDefaultShipping(this.defaultUserShippingId).subscribe(
+      res => {
+        this.getCurrentUser();
+        this.defaultShippingSet = true;
       },
       error => {
         console.log(error.text());
@@ -143,6 +204,7 @@ export class MyProfileComponent implements OnInit {
     this.userPayment.expiryYear="";
     this.userPayment.userBilling= this.userBilling;
     this.defaultPaymentSet=false;
+    this.newPaymentAdded = false; 
   }
 
 

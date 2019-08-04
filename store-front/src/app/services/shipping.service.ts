@@ -1,38 +1,49 @@
 import { Injectable } from '@angular/core';
 import { AppConst } from '../constants/app-const';
-import { HttpClient,HttpHeaders } from '@angular/common/http';
-import { UserPayment } from '../models/user-payment';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { UserShipping } from '../models/user-shipping';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PaymentService {
+export class ShippingService {
+
   private serverPath: string = AppConst.serverPath;
 
   constructor(private http: HttpClient) { }
 
-  newPayment(payment: UserPayment){
-    let url = this.serverPath+"/payment/add";
+  newShipping(shipping: UserShipping){
+    let url = this.serverPath+"/shipping/add";
 
     let tokenHeader = new HttpHeaders({
       'Content-Type' : 'application/json',
       'Authorization' : localStorage.getItem('token')
     });
-    return this.http.post(url,JSON.stringify(payment),{headers: tokenHeader,responseType: 'text'});
+    return this.http.post(url,JSON.stringify(shipping),{headers: tokenHeader,responseType: 'text'});
   }
 
-  getUserPaymentList(){
-    let url = this.serverPath+"/payment/getUserPaymentList";
+  getUserShippingList(){
+    let url = this.serverPath+"/shipping/getUserShippingList";
 
     let tokenHeader = new HttpHeaders({
       'Content-Type' : 'application/json',
       'Authorization' : localStorage.getItem('token')
     });
-    return this.http.get(url,{headers: tokenHeader,responseType: 'text'});
+    return this.http.get(url,{headers: tokenHeader,responseType: 'json'});
   }
 
-  removePayment(id: number){
-    let url = this.serverPath+"/payment/remove";
+  removeShipping(id: number){
+    let url = this.serverPath+"/shipping/remove";
+
+    let tokenHeader = new HttpHeaders({
+      'Content-Type' : 'application/json',
+      'Authorization' : localStorage.getItem('token')
+    });
+    return this.http.post(url,id,{headers: tokenHeader,responseType: 'text'});
+  }
+
+  setDefaultShipping(id: number){
+    let url = this.serverPath+"/shipping/setDefault";
 
     let tokenHeader = new HttpHeaders({
       'Content-Type' : 'application/json',
@@ -41,13 +52,4 @@ export class PaymentService {
     return this.http.post(url,id,{headers: tokenHeader,responseType: 'text'});
   }
 
-  setDefaultPayment(id: number){
-    let url = this.serverPath+"/payment/setDefault";
-
-    let tokenHeader = new HttpHeaders({
-      'Content-Type' : 'application/json',
-      'Authorization' : localStorage.getItem('token')
-    });
-    return this.http.post(url,id,{headers: tokenHeader,responseType: 'text'});
-  }
 }

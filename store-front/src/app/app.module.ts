@@ -13,6 +13,7 @@ import { LoginService } from './services/login.service';
 import { UserService } from './services/user.service';
 import { MyProfileComponent } from './components/my-profile/my-profile.component';
 import { PaymentService } from './services/payment.service';
+import { ShippingService } from './services/shipping.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { PaymentService } from './services/payment.service';
   ],
   providers: [LoginService,
               UserService,
-              PaymentService],
+              PaymentService,
+              ShippingService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
