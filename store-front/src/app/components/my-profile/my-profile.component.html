@@ -35,7 +35,7 @@
                   <ul class="nav nav-pills nav-justified">
                     <!-- <li class="active"><a data-toggle="tab" href="#edit">Edit</a></li> -->
                     <li class="active"><a data-toggle="tab" href="#edit">Edit</a></li>
-                    <li ><a data-toggle="tab" href="#payment">Payment</a></li>
+                    <li><a data-toggle="tab" href="#payment">Payment</a></li>
                     <li><a data-toggle="tab" href="#shipping">Shipping</a></li>
                     <!-- <li ><a data-toggle="tab" href="#edit"></a></li> -->
                   </ul>
@@ -302,16 +302,108 @@
                     </div>
                   </div>
                   <!-- Payment details end -->
-                  <div class="tab-pane fade" style="margin-top: 20px" id="shipping">
 
-
-
-                  </div>
                   <!-- Shipping Details start -->
+                  <div class="tab-pane fade" style="margin-top: 20px" id="shipping">
+                    <div class="panel-group">
+                      <div class="panel panel-default panel-faq" style="border:none;">
+                        <div class="panel-body">
+                          <ul class="nav nav-tabs">
+                            <li class="active"><a data-toggle="tab" href="#exstshipping">List of Shipping Address</a></li>
+                            <li><a data-toggle="tab" href="#newshipping">Add(Update) Shipping Address</a></li>
+                          </ul>
+                          <div class="tab-content">
+                            <div style="margin-top:20px;" id="exstshipping" class="tab-pane fade in active">
+                              <p *ngIf="defaultShippingSet" style="color:green;">Default shipping set successfully!</p>
+                              <form (ngSubmit)="setDefaultShipping()" method="post">
+                                <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th>Default </th>
+                                      <th>Shipping Address </th>
+                                      <th>Operations</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr *ngFor="let userShipping of userShippingList">
+                                      <td>
+                                        <input type="radio" name="defaultUserShippingId" [(ngModel)]="defaultUserShippingId" [value]="userShippingList.id" />
+                                        <span>default</span>
+                                      </td>
+                                      <td>{{userShipping.userShippingStreet1}},
+                                          {{userShipping.userShippingStreetCity}},
+                                          {{userShipping.userShippingState}}
+                                      </td>
+                                      <td>
+                                        <a data-toggle="tab" href = "#newcard"  (click)="onUpdateShipping(userShipping)" style="cursor:pointer">
+                                          <i class="fa fa-pencil" data-toggle="tooltip" title="Edit"></i>
+                                        </a>&nbsp; &nbsp;
+                                        <a  (click)="onRemoveShipping(userShipping.id)" style="cursor:pointer">
+                                          <i class="fa fa-times" data-toggle="tooltip" title="Delete"></i>
+                                        </a>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                              </form>
+                            </div>
 
-
+                          <div style="margin-top:20px" id="newshipping" class="tab-pane fade">
+                            <form (ngSubmit)="onNewShipping()" method="post">
+                              <div class="bg-info" *ngIf="updateUserShippingInfo">User Info Updated</div>
+                              <input hidden="hidden" name="id" [(ngModel)]="userShipping.id" />
+                              <div class="form-group">
+                                <label for="shippingname">* Name</label>
+                                <input type="text" class="form-control" id="shippingName" placeholder="Receiver Name" name="userShippingName"
+                                        required="required" [(ngModel)]="userShipping.userShippingName" />
+                              </div>
+                              <div class="form-group">
+                                <label for="shippingAddress">* Street Address</label>
+                                <input type="text" class="form-control" id="shippingAddress" placeholder="Street Address 1"
+                                        name="userShippingStreet1" required="required" [(ngModel)]="userShipping.userShippingStreet1">
+                              </div>
+                              <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Street Address 2"
+                                        name="userShippingStreet2" [(ngModel)]="userShipping.userShippingStreet2">
+                              </div>
+                              <div class="row">
+                                <div class="col-xs-4">
+                                  <div class="form-group">
+                                    <label for="shippingCity">* City</label>
+                                    <input type="text" class="form-control" id="userShippingCity" placeholder="Your Shipping City"
+                                        name="userShippingCity" required="required" [(ngModel)]="userShipping.userShippingCity" />
+                                  </div>
+                                </div>
+                                <div class="col-xs-4">
+                                  <div class="form-group">
+                                    <label for="shippingState">* State</label>
+                                    <select name="userShippingState" id="shippingState" class="form-control"
+                                            [(ngModel)]="userShipping.userShippingState" required="required">
+                                      <option value="" disabled>--state--</option>
+                                      <option *ngFor="let state of stateList">{{state}}</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="col-xs-4">
+                                  <div class="form-group">
+                                    <label for="shippingZipCode">* Zipcode</label>
+                                    <input type="text" class="form-control" id="userShippingZipCode" placeholder="Zipcode"
+                                        name="userShippingZipCode" required="required" [(ngModel)]="userShipping.userShippingZipCode" />
+                                  </div>
+                                </div>
+                              </div>
+                              <button type="submit" class="btn btn-primary" >Save All</button> &nbsp; &nbsp;
+                              <a data-toggle="tab" href = "#exstcard" (click) = "resetPaymentInfo()" class="btn btn-primary" role="button">Cancel</a>
+                              &nbsp;&nbsp;<span *ngIf="newPaymentAdded" style="color:green">Record successfully updated</span>
+                            </form>
+                          </div>
+                        </div>
+                       </div>
+                      </div>
+                    </div>
+                    </div>
                   <!-- Shipping Details end -->
-
                   </div>
                   <!-- tab header end -->
               </div>
