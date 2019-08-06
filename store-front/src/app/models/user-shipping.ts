@@ -8,6 +8,6 @@ export class UserShipping {
     public userShippingState: string;
     public userShippingCountry: string;
     public userShippingZipCode: string;
-    public userShippingDefault: string;
+    public userShippingDefault: boolean;
 
 }

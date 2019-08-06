@@ -114,7 +114,7 @@
                         <div class="panel-body">
                           <ul class="nav nav-tabs" >
                             <li class="active"><a data-toggle="tab" href="#exstcard">List of Credit Cards</a></li>
-                            <li class="border border-warning"><a data-toggle="tab" href="#newcard" (click)= "resetPaymentInfo()">Add(Update) Credit Card</a></li>
+                            <li class="border border-warning"><a data-toggle="tab" href="#newcard" (click)= "resetInfo('P')">Add(Update) Credit Card</a></li>
                           </ul>
                           <div class="tab-content">
                             <div style="margin-top:20px;" id ="exstcard" class="tab-pane fade in active">
@@ -131,6 +131,7 @@
                                   <tbody>
                                     <tr *ngFor="let userPayment of userPaymentList">
                                       <td>
+                                        <!-- when [value] = [(ngModel)] then radio button is checked -->
                                         <input type="radio" name="defaultUserPaymentid" [(ngModel)]="defaultUserPaymentId" [value]="userPayment.id" />
                                         <span>default</span>
                                       </td>
@@ -327,15 +328,16 @@
                                   <tbody>
                                     <tr *ngFor="let userShipping of userShippingList">
                                       <td>
-                                        <input type="radio" name="defaultUserShippingId" [(ngModel)]="defaultUserShippingId" [value]="userShippingList.id" />
-                                        <span>default</span>
+                                          <!-- when [value] = [(ngModel)] then radio button is checked -->
+                                        <input type="radio" name="defaultUserShippingId" [(ngModel)]="defaultUserShippingId" [value]="userShipping.id" />
+                                        <span>default</span> 
                                       </td>
                                       <td>{{userShipping.userShippingStreet1}},
                                           {{userShipping.userShippingStreetCity}},
                                           {{userShipping.userShippingState}}
                                       </td>
                                       <td>
-                                        <a data-toggle="tab" href = "#newcard"  (click)="onUpdateShipping(userShipping)" style="cursor:pointer">
+                                        <a data-toggle="tab" href = "#newshipping"  (click)="onUpdateShipping(userShipping)" style="cursor:pointer">
                                           <i class="fa fa-pencil" data-toggle="tooltip" title="Edit"></i>
                                         </a>&nbsp; &nbsp;
                                         <a  (click)="onRemoveShipping(userShipping.id)" style="cursor:pointer">
@@ -394,8 +396,8 @@
                                 </div>
                               </div>
                               <button type="submit" class="btn btn-primary" >Save All</button> &nbsp; &nbsp;
-                              <a data-toggle="tab" href = "#exstcard" (click) = "resetPaymentInfo()" class="btn btn-primary" role="button">Cancel</a>
-                              &nbsp;&nbsp;<span *ngIf="newPaymentAdded" style="color:green">Record successfully updated</span>
+                              <a data-toggle="tab" href = "#exstshipping" (click) = "resetInfo('S')" class="btn btn-primary" role="button">Cancel</a>
+                              &nbsp;&nbsp;<span *ngIf="newShippingAdded" style="color:green">Record successfully updated</span>
                             </form>
                           </div>
                         </div>

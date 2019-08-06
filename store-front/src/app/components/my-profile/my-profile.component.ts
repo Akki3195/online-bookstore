@@ -39,6 +39,7 @@ export class MyProfileComponent implements OnInit {
   private defaultUserPaymentId: number;
   private stateList: string[] = [];
   private newPaymentAdded: boolean = false;
+  private newShippingAdded: boolean = false;
   private var: boolean = true;
 
   private userShipping: UserShipping = new UserShipping();
@@ -70,30 +71,6 @@ export class MyProfileComponent implements OnInit {
     );
   }
 
-  getCurrentUser(){
-    this.userService.getCurrentUser().subscribe(
-      res => {
-        this.user = JSON.parse(JSON.stringify(res));
-        this.userPaymentList = this.user.userPaymentList;
-        for (let index in this.userPaymentList) {
-  				if(this.userPaymentList[index].defaultPayment) {
-  					this.defaultUserPaymentId=this.userPaymentList[index].id;
-  					break;
-  				}
-  			}
-        console.log(this.user);
-        this.dataFetched = true;
-      },
-      err => {
-        
-        if(JSON.parse(JSON.stringify(err)).error.message== "Unauthorized"){
-          localStorage.clear();
-          location.reload();
-        }
-      }
-    );
-  }
-
   onNewPayment(){
     this.userPayment.userBilling = this.userBilling;
     console.log("from new Paymetn"+this.userPayment.userBilling);
@@ -101,6 +78,7 @@ export class MyProfileComponent implements OnInit {
       res => {
         this.getCurrentUser();
         this.newPaymentAdded = true;
+        this.userPayment = new UserPayment();
       },
       error => {
         console.log(error);
@@ -126,10 +104,16 @@ export class MyProfileComponent implements OnInit {
     );
   }
 
-  resetPaymentInfo(){
+  resetInfo(resetChar: string){
+    if(resetChar === 'P'){
     this.userPayment = new UserPayment();
     this.userBilling = new UserBilling();
     this.newPaymentAdded = false;
+    }
+    if(resetChar === 'S'){
+      this.userShipping = new UserShipping();
+      this.newShippingAdded = false;
+    }
   }
 
   setDefaultPayment(){
@@ -149,9 +133,12 @@ export class MyProfileComponent implements OnInit {
     this.shippingService.newShipping(this.userShipping).subscribe(
       res => {
         this.getCurrentUser();
+        this.userShipping = new UserShipping();
+        this.newShippingAdded = true;
       },
       error => {
         console.log(error.text());
+        this.newShippingAdded = false;
       }
     );
   }
@@ -184,6 +171,39 @@ export class MyProfileComponent implements OnInit {
     );
   }
 
+  getCurrentUser(){
+    this.userService.getCurrentUser().subscribe(
+      res => {
+        this.user = JSON.parse(JSON.stringify(res));
+        this.userPaymentList = this.user.userPaymentList;
+        this.userShippingList = this.user.userShippingList;
+
+        for (let index in this.userPaymentList) {
+  				if(this.userPaymentList[index].defaultPayment) {
+  					this.defaultUserPaymentId=this.userPaymentList[index].id;
+  					break;
+  				}
+        }
+        
+        for (let index in this.userShippingList) {
+  				if(this.userShippingList[index].userShippingDefault) {
+  					this.defaultUserShippingId=this.userShippingList[index].id;
+  					break;
+  				}
+  			}
+        console.log(this.user);
+        this.dataFetched = true;
+      },
+      err => {
+        
+        if(JSON.parse(JSON.stringify(err)).error.message== "Unauthorized"){
+          localStorage.clear();
+          location.reload();
+        }
+      }
+    );
+  }
+
   ngOnInit() {
     if(this.loginService.checkSession()){
       this.loggedIn = true;
@@ -195,7 +215,7 @@ export class MyProfileComponent implements OnInit {
   
     this.getCurrentUser();
 
-    for(let s in AppConst.usStates){
+    for(let s in AppConst.states){
       this.stateList.push(s);
     }
     this.userBilling.userBillingState = "";
@@ -205,6 +225,10 @@ export class MyProfileComponent implements OnInit {
     this.userPayment.userBilling= this.userBilling;
     this.defaultPaymentSet=false;
     this.newPaymentAdded = false; 
+    this.newShippingAdded = false;
+
+    this.userShipping.userShippingState="";
+    this.defaultShippingSet=false;
   }
 
 
