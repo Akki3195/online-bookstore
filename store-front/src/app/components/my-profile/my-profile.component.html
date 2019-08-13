@@ -247,7 +247,7 @@
                                       <label >* Expiration Date</label>
                                       <div class="row">
                                         <div class="col-xs-6">
-                                          <select name="expiryMonth" required="required" id="" class="form-control"
+                                          <select name="expiryMonth" required="required" id="expiryMonth" class="form-control"
                                                   [(ngModel)]="userPayment.expiryMonth">
                                               <option value="" disabled="disabled">--Month--</option>      
                                               <option value="1">Jan (01)</option>
@@ -266,7 +266,7 @@
                                         </div>
 
                                         <div class="col-xs-6">
-                                          <select name="expiryYear" required="required" id="" class="form-control"
+                                          <select name="expiryYear" required="required" id="expiryYear" class="form-control"
                                                   [(ngModel)]="userPayment.expiryYear">
                                               <option value="" disabled="disabled">--Year--</option>      
                                               <option value="17">2017</option>
@@ -285,14 +285,14 @@
                                   </div>
                                   <div class="col-xs-5 pull-right" >
                                     <div class="form-group">
-                                      <label for="cardCVC">CV Code</label>
+                                      <label for="cardCVC">CVV Code</label>
                                       <input type="tel" id="cardCVC" class="form-control" name="cardCVC" placeholder="CVC" [(ngModel)]="userPayment.cvc">
                                     </div>
                                   </div>
                                 </div>
                                 <hr />
                                 <button type="submit" class="btn btn-primary" >Save All</button> &nbsp; &nbsp;
-                                <a data-toggle="tab" href = "#exstcard" (click) = "resetPaymentInfo()" class="btn btn-primary" role="button">Cancel</a>
+                                <a data-toggle="tab" href = "#exstcard" (click) = "resetInfo('P')" class="btn btn-primary" role="button">Cancel</a>
                                 &nbsp;&nbsp;<span *ngIf="newPaymentAdded" style="color:green">Record successfully updated</span>
                               </form>
                             </div>

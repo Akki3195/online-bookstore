@@ -47,7 +47,6 @@ export class MyProfileComponent implements OnInit {
 
   private defaultUserShippingId: number;
   private defaultShippingSet: boolean;
-  
 
   constructor(private loginService: LoginService,
               private userService: UserService,
@@ -57,7 +56,7 @@ export class MyProfileComponent implements OnInit {
               ) { }
 
   onUpdateUserInfo(){
-    this.userService.updateUserInfo(this.user,this.newPassword).subscribe(
+    this.userService.updateUserInfo(this.user,this.newPassword,this.currentPassword).subscribe(
       res => {
         console.log(res);
         this.updateSuccess = true;
@@ -191,7 +190,6 @@ export class MyProfileComponent implements OnInit {
   					break;
   				}
   			}
-        console.log(this.user);
         this.dataFetched = true;
       },
       err => {

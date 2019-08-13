@@ -14,6 +14,8 @@ import { UserService } from './services/user.service';
 import { MyProfileComponent } from './components/my-profile/my-profile.component';
 import { PaymentService } from './services/payment.service';
 import { ShippingService } from './services/shipping.service';
+import { BookListComponent } from './components/book-list/book-list.component';
+import { BookService } from './services/book.service';
 
 @NgModule({
   declarations: [
@@ -21,19 +23,22 @@ import { ShippingService } from './services/shipping.service';
     HomeComponent,
     NavBarComponent,
     MyAccountComponent,
-    MyProfileComponent
+    MyProfileComponent,
+    BookListComponent,
+    BookListComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    routing
+    routing,
   ],
   providers: [LoginService,
               UserService,
               PaymentService,
-              ShippingService],
+              ShippingService,
+              BookService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

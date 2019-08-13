@@ -25,16 +25,16 @@ export class UserService {
     return this.http.post(url,JSON.stringify(userInfo), {headers: tokenHeader,responseType: 'text'});
   }
 
-  updateUserInfo(user: User,newPassword: string){
+  updateUserInfo(user: User,newPassword: string,currentPassword: string){
     let url = this.serverPath+"/user/updateUserInfo";
     let userInfo = {
       "id" : user.id,
       "firstName" : user.userName,
       "lastName" : user.lastName,
       "userName" : user.userName,
-      "currentPassword" : user.password,
       "email" : user.email,
-      "newPassword" : newPassword
+      "newPassword" : newPassword,
+      "currentPassword" : currentPassword
     };
     let tokenHeader = new HttpHeaders({
       'Content-Type' : 'application/json',

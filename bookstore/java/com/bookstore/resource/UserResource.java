@@ -129,8 +129,9 @@ public class UserResource {
 		
 		if(newPassword != null && !newPassword.isEmpty() && !newPassword.equals("")) {
 			BCryptPasswordEncoder passwordEncoder = SecurityUtility.passwordEncoder();
+			String encryptedCurrentPassword =  passwordEncoder.encode(currentPassword);
 			String dbPassword = currentUser.getPassword();
-			if(currentPassword.equals(dbPassword)){
+			if(encryptedCurrentPassword.equals(dbPassword)){
 				currentUser.setPassword(passwordEncoder.encode(newPassword));
 			}
 			else {
