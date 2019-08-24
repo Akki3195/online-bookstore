@@ -34,7 +34,9 @@ public class JwtRequestFilter extends OncePerRequestFilter{
 		
 		String username = null;
 		String jwtToken = null;
+		String urlPath = request.getServletPath();
 		
+		if(!urlPath.contains("/image/book")) {	
 		//Jwt Token is in the form "Bearer token". Removing Bearer word and get only the Token
 		if(requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")){
 			jwtToken = requestTokenHeader.substring(7);
@@ -66,8 +68,8 @@ public class JwtRequestFilter extends OncePerRequestFilter{
 				SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 			}
 		}
+		}
 		filterChain.doFilter(request, response);
-		
 	}
 
 }
