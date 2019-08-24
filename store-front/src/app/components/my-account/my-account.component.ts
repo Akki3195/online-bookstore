@@ -75,8 +75,10 @@ export class MyAccountComponent implements OnInit {
         let tokenStr= 'Bearer '+jwtToken;
         localStorage.setItem('token', tokenStr);
         this.loggedIn= true;
-        location.reload();
-        this.router.navigate(['/home']);
+
+        window.open('/home','_self');
+        // location.reload();
+        // this.router.navigate(['home']);
         // console.log("From onLogin method "+res);
         // // localStorage.setItem("xAuthToken",JSON.parse(JSON.stringify(res)).token);
       },

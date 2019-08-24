@@ -4,6 +4,7 @@ import { AppConst } from 'src/app/constants/app-const';
 import { BookService } from 'src/app/services/book.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { PagerService } from 'src/app/services/pager.service';
 
 @Component({
   selector: 'app-book-list',
@@ -14,34 +15,45 @@ export class BookListComponent implements OnInit {
 
   public filterQuery = "";
   public rowsOnpage = 5;
-  
+
   private selectedBook: Book;
   private bookList: Book[];
   private serverPath = AppConst.serverPath;
+
+  // array of all items to be paged
+  private allItems: any[];
+
+  // pager object
+  pager: any = {};
+
+  // paged items
+  pagedItems:Book [];
 
   constructor(
     private bookService: BookService,
     private router: Router,
     private http: HttpClient,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private pagerService: PagerService
   ) { }
 
-  onSelect(book: Book){
+  onSelect(book: Book) {
     this.selectedBook = book;
-    this.router.navigate(['/bookDetail',this.selectedBook.id]);
+    this.router.navigate(['/bookDetail', this.selectedBook.id]);
   }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      if(params['bookList']){
+      if (params['bookList']) {
         console.log("filtered book list");
         this.bookList = JSON.parse(params['bookList']);
       }
-      else{
+      else {
         this.bookService.getBookList().subscribe(
           res => {
             console.log(res);
             this.bookList = res as Book[];
+            this.setPage(1);
           },
           err => {
             console.log(err);
@@ -52,5 +64,13 @@ export class BookListComponent implements OnInit {
 
     );
   }
+
+  setPage(page: number) {
+    // get pager object from service
+    this.pager = this.pagerService.getPager(this.bookList.length, page);
+
+    // get items for current page
+    this.pagedItems = this.bookList.slice(this.pager.startIndex, this.pager.endIndex + 1);
+}
 
 }

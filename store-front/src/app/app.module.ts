@@ -16,6 +16,7 @@ import { PaymentService } from './services/payment.service';
 import { ShippingService } from './services/shipping.service';
 import { BookListComponent } from './components/book-list/book-list.component';
 import { BookService } from './services/book.service';
+import { PagerService } from './services/pager.service';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { BookService } from './services/book.service';
               UserService,
               PaymentService,
               ShippingService,
-              BookService],
+              BookService,
+              PagerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
