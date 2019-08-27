@@ -1,0 +1,85 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-8">
+      <h2 class="section-headline">
+        <span>Book Detail</span>
+      </h2>
+    </div>
+    <div class="col-xs-4">
+      <img src="../../../assets/logo.png" class="img-responsive right" style="width:400px;z-index:1">
+    </div>
+    <img src="../../../assets/wood.png" class="img-responsive right"
+      style="position: absolute;margin-top:90px;z-index:-2;">
+  </div>
+  <hr style="position:absolute;width:65%;height:6px;background-color:#333;
+             z-index:-1;margin-top:-170px;" />
+  <div class="row">
+    <div class="row" style="margin-top: 80px;">
+      <div class="col-xs-3">
+        <i class="fa fa-backward" style="color: #337ab7" aria-hidden="true"><a routerLink="/bookList"> Back to book list</a></i>
+        <br />
+        <img class="img-responsive" style="margin-top: 20px;" src="{{serverPath}}/image/book/{{book.id}}.png" />
+      </div>
+      <div class="col-xs-9">
+        <h3><span *ngIf="addBookSuccess" style="color:forestgreen;">
+            <i class="fa fa-check" style="color: forestgreen;"></i>Added to cart.
+          </span>
+        </h3>
+        <h3><span *ngIf="notEnoughStock" style="color: red;">
+            Oops,only<span>{{book.inStockNumber}}</span> In stock.</span>
+        </h3>
+
+        <h3>{{book.title}}</h3>
+        <div class="row">
+          <div class="col-xs-5">
+            <h5><strong>Author: </strong><span>{{book.author}}</span></h5>
+            <p><strong>Publisher: </strong><span>{{book.publisher}}</span></p>
+            <p><strong>Publication Date: </strong><span>{{book.publicationDate}}</span></p>
+            <p><strong>Publisher:</strong><span>{{book.publisher}}</span></p>
+            <p><strong>Category:</strong><span>{{book.Category}}</span></p>
+            <p><strong><span>{{book.format}} </span>:</strong> 
+              <span>{{book.numberOfPages}}</span> Pages</p>
+            <p><strong>ISBN: </strong><span>{{book.isbn}}</span></p>
+            <p><strong>Shipping Weight: </strong><span>{{book.shippingWeight}}</span>ounces</p>
+            <p><strong>Description: </strong>{{book.description}}</p>
+          </div>
+          <div class="col-xs-7">
+            <div class="panel panel-default" style="border-width: 5px;margin-top: 20px;">
+              <div class="panel-body">
+                <div class="col-xs-5">
+                  <h4>Our Price: <span style="color: #db3208;">$<span>
+                    {{book.ourPrice | number:'1.2-2'}}</span></span>
+                  </h4>
+                  <p>List Price: <span style="text-decoration: line-through;">
+                    $ <span>{{book.listPrice | number : '1.2-2'}}</span></span>
+                  </p>
+                  <p>You Save: $ <span>{{book.listPrice-book.ourPrice  | number: '1.2-2'}}</span></p>
+                  <span>Qty: </span>
+                  <select *ngIf="book.inStockNumber < 10" [(ngModel)]="qty" class="browser-default" style="display: inline;">
+                      <option *ngFor="let x of numberList" [ngValue]="x+1">{{x+1}}</option>
+                    </select>
+                  <select *ngIf="book.inStockNumber > 10" [(ngModel)]="qty" class="browser-default" style="display: inline;">
+                    <option *ngFor="let x of numberList" [ngValue]="x">{{x}}</option>
+                  </select>
+                </div>
+                <div class="col-xs-6">
+                  <h4 *ngIf="book.inStockNumber > 10" style="color: green;">In Stock</h4>
+                  <h4 *ngIf="book.inStockNumber < 10 && book.inStockNumber > 0" style="color: green;">
+                    Only <span>{{book.inStockNumber}}</span> In Stock
+                  </h4>
+                  <h4 *ngIf="book.inStockNumber == 0" style="color: darkred;">Unavailable</h4>
+
+                  <button [disabled]="book.inStockNumber == 0" (click)="onAddToCart()" class="btn-primary mat-primary">
+                    Add To Cart
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+    </div>
+  </div>
+</div>

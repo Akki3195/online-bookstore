@@ -17,6 +17,7 @@ import { ShippingService } from './services/shipping.service';
 import { BookListComponent } from './components/book-list/book-list.component';
 import { BookService } from './services/book.service';
 import { PagerService } from './services/pager.service';
+import { BookDetailComponent } from './components/book-detail/book-detail.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { PagerService } from './services/pager.service';
     MyAccountComponent,
     MyProfileComponent,
     BookListComponent,
-    BookListComponent
+    BookListComponent,
+    BookDetailComponent
   ],
   imports: [
     BrowserModule,

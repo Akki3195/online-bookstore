@@ -13,8 +13,8 @@ import { PagerService } from 'src/app/services/pager.service';
 })
 export class BookListComponent implements OnInit {
 
-  public filterQuery = "";
-  public rowsOnpage = 5;
+  private filterQuery = "";
+  private  rowsOnPage: number = 10;
 
   private selectedBook: Book;
   private bookList: Book[];
@@ -67,7 +67,7 @@ export class BookListComponent implements OnInit {
 
   setPage(page: number) {
     // get pager object from service
-    this.pager = this.pagerService.getPager(this.bookList.length, page);
+    this.pager = this.pagerService.getPager(this.bookList.length, page, this.rowsOnPage);
 
     // get items for current page
     this.pagedItems = this.bookList.slice(this.pager.startIndex, this.pager.endIndex + 1);

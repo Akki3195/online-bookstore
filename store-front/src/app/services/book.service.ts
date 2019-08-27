@@ -13,8 +13,8 @@ export class BookService {
   getBookList(){
     let url = this.serverPath+"/book/bookList";
     let header = new HttpHeaders({
-      'Content-Type' : 'application/json',
-      'Authorization' : localStorage.getItem('token')
+      'Content-Type' : 'application/json'
+      // 'Authorization' : localStorage.getItem('token')
     });
 
     return this.http.get(url,{headers: header, responseType: 'json'});

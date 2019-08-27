@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-xs-8">
       <h2 class="section-headline">
-        <span>My Account</span>
+        <span>Book List</span>
       </h2>
     </div>
     <div class="col-xs-4">
@@ -11,6 +11,9 @@
     <img src="../../../assets/wood.png" class="img-responsive right"
       style="position: absolute;margin-top:90px;z-index:-2;">
   </div>
+  <hr style="position:absolute;width:65%;height:6px;background-color:#333;
+             z-index:-1;margin-top:-170px;" />
+
   <div class="row" style="margin-top: 20px;">
     <div class="col-md-12">
       <table class="table">
@@ -24,7 +27,7 @@
                 </div>
                 <div class="col-md-3">
                   <label class="label-control">Rows on page:</label>
-                  <select class="form-control input-sm" [(ngModel)]="rowsonPage">
+                  <select class="form-control input-sm" (click) = "setPage(1)" [(ngModel)]="rowsOnPage">
                     <option [ngValue]="5">5</option>
                     <option [ngValue]="10">10</option>
                     <option [ngValue]="15">15</option>
@@ -37,12 +40,12 @@
         <tbody>
           <tr *ngFor="let book of pagedItems">
             <div class="row" style="margin-bottom: 30px">
-              <div class="col-md-3">
+              <div class="col-md-3 col-md-offset-1">
                 <a (click)="onSelect(book)" style="cursor: pointer;">
                   <img class="img-responsive" src="{{serverPath}}/image/book/{{book.id}}.png" alt="Image not available"/>
                 </a>
               </div>
-              <div class="col-md-9">
+              <div class="col-md-8">
                 <h4 (click)="onSelect(book)" style="margin-top: 20px;cursor: pointer;">
                   {{book.title}}
                 </h4>
@@ -53,9 +56,13 @@
                 </a>
                 <span>{{book.numberOfPages}}</span> <span> Pages</span>
                 <br />
+                <!--**For number pipe {minIntegerDigits}.{minFractionDigits}-{maxFractionDigits} -->
+                <!-- i. A minimum of 1 digit will be shown before decimal point
+                     ii. It will show at least 2 digits after decimal point
+                     iii. But not more than 2 digits -->
                 <a (click)="onSelect(book)">
                   <span style="font-size: x-large;color: #db3208">Rs.
-                    <span>{{book.ourPrice | number: '1.2-2'}}</span></span>
+                    <span>{{book.ourPrice | number: '1.2-2'}} </span></span>
                 </a>
                 <span style="text-decoration: line-through;">Rs.
                   <span>{{book.listPrice | number: '1.2-2'}}</span>
