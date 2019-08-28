@@ -69,7 +69,7 @@
                   </h4>
                   <h4 *ngIf="book.inStockNumber == 0" style="color: darkred;">Unavailable</h4>
 
-                  <button [disabled]="book.inStockNumber == 0" (click)="onAddToCart()" class="btn-primary mat-primary">
+                  <button [disabled]="book.inStockNumber == 0" (click)="onAddToCart()" class="btn-danger">
                     Add To Cart
                   </button>
                 </div>
