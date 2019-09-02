@@ -27,7 +27,7 @@
         </div>
       </div>
       <br/>
-      <div class="aler alert-success" *ngIf="cartItemUpdated">
+      <div class="aler alert-success" *ngIf="cartItemUpdate">
         Cart Item Updated Successfully
       </div>
       <div class="aler alert-warning" *ngIf="notEnoughStock">
@@ -41,8 +41,12 @@
           <h4>Products</h4>
         </div>
         <div class="col-xs-2">
+          <h4>Price</h4>
+        </div>
+        <div class="col-xs-2">
           <h4>Qty</h4>
         </div>
+      </div>
 
         <div class="row" *ngFor="let cartItem of cartItemList">
           <hr/>
@@ -52,7 +56,7 @@
             </a>
           </div>
           <div class="col-xs-6">
-            <a class="pointer" (click)="onSelect(cartItem.book)">
+            <a style="cursor: pointer" (click)="onSelect(cartItem.book)">
               <h4>{{cartItem.book.title}}</h4>
             </a>
             <p *ngIf="cartItem.book.inStockNumber > 10" style="color: green;">In Stock</p>
@@ -61,7 +65,7 @@
             </p>
             <p *ngIf="cartItem.book.inStockNumber == 0" style="color: darkred;">Product Unavailable</p>
 
-            <a class="pointer" (click)="onRemoveCartItem(cartItem)">delete</a>
+            <a class="btn btn-primary btn-sm" style="cursor: pointer" (click)="onRemoveCartItem(cartItem)">delete</a>
           </div>
           <div class="col-xs-2">
             <h5 style="color: #db3208; font-size: large;">
@@ -71,19 +75,17 @@
           <div class="col-xs-2">
             <input hidden="hidden" name="id" [(ngModel)]="cartItem.id" />
             <input id="cartItem.id" name="qty" [disabled]="cartItem.book.inStockNumber ==0"
-                   class="form-control cartItemQty" [(ngModel)]="cartItem.qty" (ngModelChange)="cartItem.toUpdate=true" />       
-            <a class="btn btn-primary pointer" *ngIf="cartItem.toUpdate" (click)="onUpdateCartItem(cartItem)">Update</a>
+                   class="form-control" [(ngModel)]="cartItem.qty" (ngModelChange)="cartItem.toUpdate=true" />       
+            <a  class="btn btn-primary" *ngIf="cartItem.toUpdate" (click)="onUpdateCartItem(cartItem)">Update</a>
           </div>
         </div>
         <div class="row">
           <hr/>
           <h4 class="col-xs-12 text-right">
             <strong style="font-size: large">Total Price(<span>{{cartItemNumber}}</span> items):</strong>
-            <span style="color: #db3208; font-size: large;">$<span>{{shoppingCart.grandotal}}</span></span>
+            <span style="color: #db3208; font-size: large;">$<span>{{shoppingCart.grandTotal}}</span></span>
           </h4>
         </div>
       </div>
     </div>
   </div>
-
-</div>

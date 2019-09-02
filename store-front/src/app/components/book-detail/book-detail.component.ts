@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Book } from 'src/app/models/book';
 import { AppConst } from 'src/app/constants/app-const';
 import { BookService } from 'src/app/services/book.service';
+import { CartService } from 'src/app/services/cart.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpParams, HttpClient } from '@angular/common/http';
 
@@ -25,11 +26,21 @@ export class BookDetailComponent implements OnInit {
     private bookService: BookService,
     private router: Router,
     private http: HttpClient,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cartService: CartService
   ) { }
 
   onAddToCart(){
-
+    this.cartService.addItem(this.bookId, this.qty).subscribe(
+      res => {
+        console.log(res);
+        this.addBookSuccess = true;
+      },
+      err => {
+        console.log(err);
+        this.notEnoughStock = true;
+      }
+    );
   }
 
 

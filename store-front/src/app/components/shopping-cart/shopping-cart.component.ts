@@ -5,6 +5,7 @@ import { CartItem } from 'src/app/models/cart-item';
 import { ShoppingCart } from 'src/app/models/shopping-cart';
 import { Router } from '@angular/router';
 import { CartService } from 'src/app/services/cart.service';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -16,8 +17,8 @@ export class ShoppingCartComponent implements OnInit {
   private serverPath = AppConst.serverPath;
   private selectedBook: Book;
   private cartItemList: CartItem[] = [];
-  private cartItemNumber: number;
-  private shopppingCart: ShoppingCart = new ShoppingCart();
+  private cartItemNumber: number = 0;
+  private shoppingCart: ShoppingCart = new ShoppingCart();
   private emptyCart: boolean;
   private notEnoughStock: boolean;
   private cartItemUpdate: boolean;
@@ -25,6 +26,7 @@ export class ShoppingCartComponent implements OnInit {
   constructor(
     private router: Router,
     private cartServices: CartService,
+    private loginService: LoginService
   ) { }
   
   onSelect(book:Book){
@@ -46,6 +48,7 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   onUpdateCartItem(cartItem: CartItem){
+    cartItem.toUpdate = false;
     this.cartServices.updateCartItem(cartItem.id, cartItem.qty).subscribe(
       res => {
         console.log(res);
@@ -61,7 +64,7 @@ export class ShoppingCartComponent implements OnInit {
   getCartItemList(){
     this.cartServices.getCartItemList().subscribe(
       res => {
-        this.cartItemList = res as CartItem[];
+        this.cartItemList = JSON.parse(JSON.stringify(res)) as CartItem[];
         this.cartItemNumber = this.cartItemList.length;
       },
       err => {
@@ -74,7 +77,7 @@ export class ShoppingCartComponent implements OnInit {
     this.cartServices.getShoppingCart().subscribe(
       res => {
         console.log(res);
-        this.shopppingCart = res as ShoppingCart;
+        this.shoppingCart = JSON.parse(JSON.stringify(res)) as ShoppingCart;
       },
       err => {
         console.log(err);
@@ -99,8 +102,11 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getCartItemList();
-    this.getShoppingCart();
+    if(this.loginService.checkSession()){
+      this.getCartItemList();
+      this.getShoppingCart();
+    }else{
+      this.router.navigate(['/myAccount']);
+    }
   }
-
 }

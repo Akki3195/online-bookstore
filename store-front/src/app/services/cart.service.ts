@@ -39,13 +39,13 @@ export class CartService {
       'Authorization': localStorage.getItem('token')
     });
 
-    return this.http.get(url, { headers: tokenHeader, responseType: 'json' });
+    return this.http.get(url, { headers: tokenHeader});
   }
 
   updateCartItem(cartItemId: number, qty: number){
     let url = AppConst.serverPath + "/cart/updateCartItem";
     let cartItemInfo = {
-      "cartItemid": cartItemId,
+      "cartItemId": cartItemId,
       "qty": qty
     }
     let tokenHeader = new HttpHeaders({
