@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -51,6 +52,9 @@ public class User implements UserDetails, Serializable{
 	
 	@OneToMany(cascade=CascadeType.ALL, mappedBy = "user")
 	private List<UserShipping> userShippingList;
+	
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+	private ShoppingCart shoppingCart;
 	
 	public long getId() {
 		return id;
@@ -145,6 +149,14 @@ public class User implements UserDetails, Serializable{
 		this.userPaymentList = userPaymentList;
 	}
 	
+	
+	public ShoppingCart getShoppingCart() {
+		return shoppingCart;
+	}
+
+	public void setShoppingCart(ShoppingCart shoppingCart) {
+		this.shoppingCart = shoppingCart;
+	}
 
 	@Override
 	public boolean isAccountNonLocked() {
@@ -175,7 +187,5 @@ public class User implements UserDetails, Serializable{
 	public void setUserShippingList(List<UserShipping> userShippingList) {
 		this.userShippingList = userShippingList;
 	}
-	
-	
 
 }
