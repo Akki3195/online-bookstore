@@ -55,7 +55,7 @@
                   </p>
                   <p>You Save: $ <span>{{book.listPrice-book.ourPrice  | number: '1.2-2'}}</span></p>
                   <span>Qty: </span>
-                  <select *ngIf="book.inStockNumber < 10" [(ngModel)]="qty" class="browser-default" style="display: inline;">
+                  <select *ngIf="book.inStockNumber <= 10" [(ngModel)]="qty" class="browser-default" style="display: inline;">
                       <option *ngFor="let x of numberList" [ngValue]="x+1">{{x+1}}</option>
                     </select>
                   <select *ngIf="book.inStockNumber > 10" [(ngModel)]="qty" class="browser-default" style="display: inline;">

@@ -20,6 +20,10 @@ import { PagerService } from './services/pager.service';
 import { BookDetailComponent } from './components/book-detail/book-detail.component';
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { CartService } from './services/cart.service';
+import { OrderComponent } from './components/order/order.component';
+import { OrderService } from './services/order.service';
+import { CheckoutService } from './services/checkout.service';
+import { OrderSummaryComponent } from './components/order-summary/order-summary.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +35,9 @@ import { CartService } from './services/cart.service';
     BookListComponent,
     BookListComponent,
     BookDetailComponent,
-    ShoppingCartComponent
+    ShoppingCartComponent,
+    OrderComponent,
+    OrderSummaryComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +52,9 @@ import { CartService } from './services/cart.service';
               ShippingService,
               BookService,
               PagerService,
-              CartService],
+              CartService,
+              OrderService,
+              CheckoutService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

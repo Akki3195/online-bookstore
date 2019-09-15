@@ -6,5 +6,6 @@ export class UserBilling {
     public userBillingCity: string;
     public userBillingState: string;
     public userBillingCountry: string;
+    public userBillingZipcode: string;
 
 }

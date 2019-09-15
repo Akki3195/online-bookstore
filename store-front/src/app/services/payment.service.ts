@@ -28,7 +28,7 @@ export class PaymentService {
       'Content-Type' : 'application/json',
       'Authorization' : localStorage.getItem('token')
     });
-    return this.http.get(url,{headers: tokenHeader,responseType: 'text'});
+    return this.http.get(url,{headers: tokenHeader,responseType: 'json'});
   }
 
   removePayment(id: number){

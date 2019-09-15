@@ -10,6 +10,9 @@ import { UserBilling } from 'src/app/models/user-billing';
 import { routerNgProbeToken } from '@angular/router/src/router_module';
 import { UserShipping } from 'src/app/models/user-shipping';
 import { ShippingService } from 'src/app/services/shipping.service';
+import { Order } from 'src/app/models/order';
+import { OrderService } from 'src/app/services/order.service';
+import { CartItem } from 'src/app/models/cart-item';
 
 @Component({
   selector: 'app-my-profile',
@@ -48,11 +51,17 @@ export class MyProfileComponent implements OnInit {
   private defaultUserShippingId: number;
   private defaultShippingSet: boolean;
 
+  private orderList: Order[] = [];
+  private order: Order = new Order();
+  private displayOrderDetail: boolean;
+  private cartItemList: CartItem[] = [];
+
   constructor(private loginService: LoginService,
               private userService: UserService,
               private router: Router,
               private paymentService: PaymentService,
-              private shippingService: ShippingService
+              private shippingService: ShippingService,
+              private orderService: OrderService
               ) { }
 
   onUpdateUserInfo(){
@@ -202,6 +211,13 @@ export class MyProfileComponent implements OnInit {
     );
   }
 
+  onDisplayOrder(order: Order){
+    console.log(order);
+    this.order = order;
+    this.cartItemList = this.order.cartItemList;
+    this.displayOrderDetail = true;
+  }
+
   ngOnInit() {
     if(this.loginService.checkSession()){
       this.loggedIn = true;
@@ -212,6 +228,15 @@ export class MyProfileComponent implements OnInit {
     }
   
     this.getCurrentUser();
+    this.orderService.getOrderList().subscribe(
+      res => {
+        this.orderList = res as Order[];
+      },
+      err => {
+        console.log(err);
+      }
+    
+    );
 
     for(let s in AppConst.states){
       this.stateList.push(s);

@@ -77,7 +77,7 @@ export class ShoppingCartComponent implements OnInit {
     this.cartServices.getShoppingCart().subscribe(
       res => {
         console.log(res);
-        this.shoppingCart = JSON.parse(JSON.stringify(res)) as ShoppingCart;
+        this.shoppingCart = res as ShoppingCart;
       },
       err => {
         console.log(err);

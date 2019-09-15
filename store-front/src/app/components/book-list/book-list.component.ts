@@ -47,6 +47,7 @@ export class BookListComponent implements OnInit {
       if (params['bookList']) {
         console.log("filtered book list");
         this.bookList = JSON.parse(params['bookList']);
+        this.setPage(1);
       }
       else {
         this.bookService.getBookList().subscribe(
