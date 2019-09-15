@@ -64,7 +64,7 @@ public class ShoppingCartResource {
 		
 		List<CartItem> cartItemList = cartItemService.findByShoppingCart(shoppingCart);
 		if(cartItemList != null) {
-			shoppingCartService.updateShoppingCart(shoppingCart);
+			shoppingCartService.updateShoppingCart(shoppingCart,user);
 		}
 		return cartItemList;
 	}
@@ -74,7 +74,7 @@ public class ShoppingCartResource {
 		User user = userService.findByUsername(principal.getName());
 		ShoppingCart shoppingCart = user.getShoppingCart();
 		if(shoppingCart != null) {
-			shoppingCartService.updateShoppingCart(shoppingCart);
+			shoppingCartService.updateShoppingCart(shoppingCart,user);
 		}
 		return shoppingCart;
 	}

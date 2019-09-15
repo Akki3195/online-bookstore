@@ -3,11 +3,12 @@ package com.bookstore;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
 
 @SpringBootApplication
 @EnableJdbcHttpSession
-public class BookstoreAngularApplication implements CommandLineRunner {
+public class BookstoreAngularApplication extends SpringBootServletInitializer implements CommandLineRunner {
 	/*
 	 * @Autowired private UserService userService;
 	 */

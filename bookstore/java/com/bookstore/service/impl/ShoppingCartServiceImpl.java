@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.bookstore.domain.CartItem;
 import com.bookstore.domain.ShoppingCart;
+import com.bookstore.domain.User;
 import com.bookstore.repository.ShoppingCartRepository;
 import com.bookstore.service.CartItemService;
 import com.bookstore.service.ShoppingCartService;
@@ -22,7 +23,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 	private CartItemService cartItemService;
 
 	@Override
-	public ShoppingCart updateShoppingCart(ShoppingCart shoppingCart) {
+	public ShoppingCart updateShoppingCart(ShoppingCart shoppingCart,User user) {
 		BigDecimal cartTotal = new BigDecimal(0);
 		
 		List<CartItem> cartItemList = cartItemService.findByShoppingCart(shoppingCart);
@@ -33,8 +34,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 				cartTotal = cartTotal.add(cartItem.getSubtotal());
 			}
 		}
-		
+		if(shoppingCart != null) {
 		shoppingCart.setGrandTotal(cartTotal);
+		}
+		else {
+			shoppingCart = new ShoppingCart();
+			shoppingCart.setUser(user);
+			shoppingCart.setGrandTotal(cartTotal);
+		}
 		
 		shoppingCartRepository.save(shoppingCart);
 		return shoppingCart;

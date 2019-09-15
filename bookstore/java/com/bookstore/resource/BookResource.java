@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -32,11 +32,11 @@ import com.bookstore.service.BookService;
 @RequestMapping("/book")
 public class BookResource {
 	@Autowired
-	private BookService bookSerivce;
+	private BookService bookService;
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public Book addBookPost(@RequestBody Book book) {
-		return bookSerivce.save(book);
+		return bookService.save(book);
 	}
 	
 	@RequestMapping(value = "/add/image",method = RequestMethod.POST)
@@ -45,8 +45,9 @@ public class BookResource {
 			HttpServletRequest request,HttpServletResponse respones
 			) {
 		try {
-			Optional<Book> book = bookSerivce.findOne(id);
-			if(!book.isEmpty()) {
+			Optional<Book> book = bookService.findOne(id);
+			
+			if(book != null) {
 			MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 			Iterator<String> it = multipartRequest.getFileNames();
 			MultipartFile multipartFile = multipartRequest.getFile(it.next());
@@ -69,28 +70,35 @@ public class BookResource {
 	
 	@RequestMapping(value="/bookList",method = RequestMethod.GET)
 	public List<Book> getBookList(){
-		return bookSerivce.findAll();
+		return bookService.findAll();
 	}
 	
 	@RequestMapping(value="/{id}",method = RequestMethod.GET)
 	public Optional<Book> getBook(@PathVariable("id") Long id){
-		Optional<Book> book= bookSerivce.findOne(id);
+		Optional<Book> book= bookService.findOne(id);
 		return book;
 	}
 	
 	@RequestMapping(value="/update",method = RequestMethod.POST)
 	public Book updateBook(@RequestBody Book book){
-		return bookSerivce.save(book);
+		return bookService.save(book);
 	}
 	
 	@RequestMapping(value="/remove",method = RequestMethod.POST)
 	public ResponseEntity<String> remove(@RequestBody long bookId) throws IOException {
-		if (bookSerivce.removeOne(bookId)) {
+		if (bookService.removeOne(bookId)) {
 			String fileName = bookId+".png";
-			Files.delete(Path.of("src/main/resources/static/image/book/"+fileName));
+			/* Files.delete(Path.of("src/main/resources/static/image/book/"+fileName)); */
+			Files.delete(Paths.get("src/main/resources/static/image/book/"+fileName));
 			return new ResponseEntity<String>("deleted", HttpStatus.OK);
 		} else
 			return new ResponseEntity<String>("error occured", HttpStatus.FAILED_DEPENDENCY);
+	}
+	
+	@RequestMapping(value="/searchBook",method = RequestMethod.POST)
+	public List<Book> searchBook(@RequestBody String keyword){
+		List<Book> bookList = bookService.blurrysearch(keyword);
+		return bookList;
 	}
 }
 
