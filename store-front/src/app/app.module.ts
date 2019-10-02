@@ -6,7 +6,6 @@ import {  HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
-import { routing } from './app.routing';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { MyAccountComponent } from './components/my-account/my-account.component';
 import { LoginService } from './services/login.service';
@@ -24,6 +23,8 @@ import { OrderComponent } from './components/order/order.component';
 import { OrderService } from './services/order.service';
 import { CheckoutService } from './services/checkout.service';
 import { OrderSummaryComponent } from './components/order-summary/order-summary.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { routing } from './app.routing';
 
 @NgModule({
   declarations: [
@@ -37,14 +38,18 @@ import { OrderSummaryComponent } from './components/order-summary/order-summary.
     BookDetailComponent,
     ShoppingCartComponent,
     OrderComponent,
-    OrderSummaryComponent
+    OrderSummaryComponent,
+    PageNotFoundComponent
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    routing,
+    // AppRoutingModule,
+    routing
+
   ],
   providers: [LoginService,
               UserService,

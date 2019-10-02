@@ -22,12 +22,12 @@
             <th>
               <div class="row">
                 <div class="col-md-3 col-md-offset-6">
-                  <label class="label-control">Filter by description:</label>
-                  <input type="text" class="form-control" [(ngModel)]="filterQuery" />
+                  <label class="label-control" for="filter">Filter by description:</label>
+                  <input type="text" id="filter" class="form-control" [(ngModel)]="filterQuery" />
                 </div>
                 <div class="col-md-3">
-                  <label class="label-control">Rows on page:</label>
-                  <select class="form-control input-sm" (click) = "setPage(1)" [(ngModel)]="rowsOnPage">
+                  <label class="label-control" for="rpp">Rows on page:</label>
+                  <select id="rpp" class="form-control input-sm" (click) = "setPage(1)" [(ngModel)]="rowsOnPage">
                     <option [ngValue]="5">5</option>
                     <option [ngValue]="10">10</option>
                     <option [ngValue]="15">15</option>

@@ -45,14 +45,12 @@ export class BookListComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       if (params['bookList']) {
-        console.log("filtered book list");
         this.bookList = JSON.parse(params['bookList']);
         this.setPage(1);
       }
       else {
         this.bookService.getBookList().subscribe(
           res => {
-            console.log(res);
             this.bookList = res as Book[];
             this.setPage(1);
           },

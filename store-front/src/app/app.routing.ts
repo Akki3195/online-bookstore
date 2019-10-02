@@ -1,4 +1,4 @@
-import {ModuleWithProviders} from '@angular/core';
+import {ModuleWithProviders, NgModule} from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {HomeComponent} from './components/home/home.component';
 import { MyAccountComponent } from './components/my-account/my-account.component';
@@ -8,6 +8,7 @@ import { BookDetailComponent } from './components/book-detail/book-detail.compon
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { OrderComponent } from './components/order/order.component';
 import { OrderSummaryComponent } from './components/order-summary/order-summary.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 const appRoute: Routes = [
     {
@@ -46,7 +47,21 @@ const appRoute: Routes = [
     {
         path: 'orderSummary',
         component: OrderSummaryComponent
+    },
+    {
+        path:"**",
+        pathMatch:"full",   
+        component: PageNotFoundComponent
     }
 ];
+
+@NgModule({
+    imports:[
+        RouterModule.forRoot(appRoute)
+    ],
+    exports: [RouterModule]
+})
+export class AppRoutingModule{
+}
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoute);

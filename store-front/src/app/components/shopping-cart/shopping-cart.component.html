@@ -23,7 +23,8 @@
           <a class="btn btn-danger"  routerLink="/bookList">Continue Shopping</a>
         </div>
         <div class="col-xs-6 text-right">
-          <a class="btn btn-danger" routerLink="/checkout">Check Out</a>
+          <!-- <a class="btn btn-danger" routerLink="/checkout">Check Out</a> -->
+          <a class="btn btn-danger" (click)="onCheckout()" routerLink="/checkout">Check Out</a>
         </div>
       </div>
       <br/>
@@ -81,10 +82,10 @@
         </div>
         <div class="row">
           <hr/>
-          <h4 class="col-xs-12 text-right">
+          <div class="col-xs-12 col-md-offset-7">
             <strong style="font-size: large">Total Price(<span>{{cartItemNumber}}</span> items):</strong>
-            <span style="color: #db3208; font-size: large;">$<span>{{shoppingCart.grandTotal}}</span></span>
-          </h4>
+            <span style="color: #db3208; font-size: large;">  $<span>{{shoppingCart.grandTotal}}</span></span>
+          </div>
         </div>
       </div>
     </div>

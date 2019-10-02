@@ -16,7 +16,7 @@
   <div class="row">
     <div class="row" style="margin-top: 80px;">
       <div class="col-xs-3">
-        <i class="fa fa-backward" style="color: #337ab7" aria-hidden="true"><a routerLink="/bookList"> Back to book list</a></i>
+        <i class="fa fa-backward" style="color: darkred"><a routerLink="/bookList" style="font-size: large;color: darkred;"> Back to book list</a></i>
         <br />
         <img class="img-responsive" style="margin-top: 20px;" src="{{serverPath}}/image/book/{{book.id}}.png" />
       </div>
@@ -26,7 +26,7 @@
           </span>
         </h3>
         <h3><span *ngIf="notEnoughStock" style="color: red;">
-            Oops,only<span>{{book.inStockNumber}}</span> In stock.</span>
+            Oops, only<span> {{book.inStockNumber}}</span> In stock.</span>
         </h3>
 
         <h3>{{book.title}}</h3>
@@ -55,15 +55,15 @@
                   </p>
                   <p>You Save: $ <span>{{book.listPrice-book.ourPrice  | number: '1.2-2'}}</span></p>
                   <span>Qty: </span>
-                  <select *ngIf="book.inStockNumber <= 10" [(ngModel)]="qty" class="browser-default" style="display: inline;">
+                  <select *ngIf="book.inStockNumber <= 10" [(ngModel)]="qty" style="display: inline;">
                       <option *ngFor="let x of numberList" [ngValue]="x+1">{{x+1}}</option>
                     </select>
-                  <select *ngIf="book.inStockNumber > 10" [(ngModel)]="qty" class="browser-default" style="display: inline;">
+                  <select *ngIf="book.inStockNumber > 10" [(ngModel)]="qty" style="display: inline;">
                     <option *ngFor="let x of numberList" [ngValue]="x">{{x}}</option>
                   </select>
                 </div>
                 <div class="col-xs-6">
-                  <h4 *ngIf="book.inStockNumber > 10" style="color: green;">In Stock</h4>
+                  <h4 *ngIf="book.inStockNumber >= 10" style="color: green;">In Stock</h4>
                   <h4 *ngIf="book.inStockNumber < 10 && book.inStockNumber > 0" style="color: green;">
                     Only <span>{{book.inStockNumber}}</span> In Stock
                   </h4>
