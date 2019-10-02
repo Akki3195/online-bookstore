@@ -15,6 +15,7 @@ import com.bookstore.domain.ShoppingCart;
 import com.bookstore.domain.User;
 import com.bookstore.repository.BookToCartItemRepository;
 import com.bookstore.repository.CartItemRepository;
+import com.bookstore.repository.ShoppingCartRepository;
 import com.bookstore.service.CartItemService;
 
 @Service
@@ -25,21 +26,35 @@ public class CartItemServiceImpl implements CartItemService {
 	@Autowired
 	private BookToCartItemRepository bookToCartItemRepository;
 	
+	@Autowired
+	private ShoppingCartRepository shoppingCartRepository;
+	
 	@Override
 	public CartItem addBookToCartItem(Book book, User user, int qty) {
-		List<CartItem> cartItemList = findByShoppingCart(user.getShoppingCart());
+		ShoppingCart shoppingCart = user.getShoppingCart();
 		
-		for(CartItem cartItem : cartItemList) {
-			if(book.getId() == cartItem.getBook().getId()) {
-				cartItem.setQty(cartItem.getQty()+ qty);
-				cartItem.setSubtotal(new BigDecimal(book.getOurPrice()).multiply(new BigDecimal(qty)));
-				cartItemRepository.save(cartItem);
-				return cartItem;
+		if (shoppingCart != null) {
+			List<CartItem> cartItemList = findByShoppingCart(shoppingCart);
+
+			/* If book is already in cartitem List then */
+			for (CartItem cartItem : cartItemList) {
+				if (book.getId() == cartItem.getBook().getId()) {
+					cartItem.setQty(cartItem.getQty() + qty);
+					cartItem.setSubtotal((new BigDecimal(book.getOurPrice()).multiply(new BigDecimal(qty)))
+							.add(cartItem.getSubtotal()));
+					cartItemRepository.save(cartItem);
+					return cartItem;
+				}
 			}
 		}
-		
+		else {
+			shoppingCart = new ShoppingCart();
+			shoppingCart.setGrandTotal(new BigDecimal(0));
+			shoppingCart.setUser(user);
+			shoppingCartRepository.save(shoppingCart);
+		}
 		CartItem cartItem = new CartItem();
-		cartItem.setShoppingCart(user.getShoppingCart());
+		cartItem.setShoppingCart(shoppingCart);
 		cartItem.setBook(book);
 		cartItem.setQty(qty);
 		cartItem.setSubtotal(new BigDecimal(book.getOurPrice()).multiply(new BigDecimal(qty)));

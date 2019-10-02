@@ -70,7 +70,8 @@ public class BookResource {
 	
 	@RequestMapping(value="/bookList",method = RequestMethod.GET)
 	public List<Book> getBookList(){
-		return bookService.findAll();
+		List<Book> bookList = bookService.findAll();
+		return bookList;
 	}
 	
 	@RequestMapping(value="/{id}",method = RequestMethod.GET)

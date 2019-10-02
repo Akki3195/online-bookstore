@@ -53,8 +53,12 @@ public class ShoppingCartResource {
 		}
 		
 		CartItem cartItem = cartItemService.addBookToCartItem(book.get(), user, Integer.parseInt(qty));
-		
+		if(cartItem != null) {
 		return new ResponseEntity<String>("Book Added Successfully", HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<String>("Failed to add book", HttpStatus.OK);
+		}
 	}
 	
 	@RequestMapping("/getCartItemList")
